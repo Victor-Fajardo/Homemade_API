@@ -8,15 +8,15 @@ namespace Homemade.Domain.Repositories
 {
     public interface IUserCommonRepository
     {
-        Task<IEnumerable<UserChef>> ListAsync();
-        Task AddAsync(UserChef userChef);
-        Task<UserChef> FindById(int id);
+        Task<IEnumerable<UserCommon>> ListAsync();
+        Task AddAsync(UserCommon userCommon);
+        Task<UserCommon> FindById(int id);
 
-        Task<UserChef> FindByName(string name);
+        Task<UserCommon> FindByName(string name);
 
-        void Update(UserChef userChef);
+        void Update(UserCommon userCommon);
 
-        void Remove(UserChef userChef);
+        void Remove(UserCommon userCommon);
 
 
     }
