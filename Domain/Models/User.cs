@@ -7,5 +7,27 @@ namespace Homemade.Domain.Models
 {
     public class User
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Lastname {get; set;}
+
+        public string Password { get; set; }
+
+        public string Email { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public bool Gender { get; set; }
+
+        public bool Connected { get; set; }
+
+        public List<Message> Messages { get; set; }
+
+        public List<Publication> Publications { get; set; }
+
+        public List<ChatUser> ChatUsers { get; set; }
+
     }
 }
