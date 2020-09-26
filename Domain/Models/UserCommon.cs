@@ -7,13 +7,14 @@ namespace Homemade.Domain.Models
 {
     public class UserCommon : User
     {
-        public List<UserChef> UserChefs;
 
         public bool Membership;
 
         public List<Menu> Menus;
 
         public List<Payment> Payments;
+
+        public List<CommonChef> CommonChefs;
 
     }
 }

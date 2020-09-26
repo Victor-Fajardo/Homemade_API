@@ -44,7 +44,18 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<UserCommon>().Property(p => p.Email).IsRequired();
             builder.Entity<UserCommon>().Property(p => p.Date).IsRequired();
             builder.Entity<UserCommon>().Property(p => p.Password).IsRequired();
+            builder.Entity<UserCommon>().Property(p => p.Membership).HasDefaultValue(false);
+            builder.Entity<UserCommon>().Property(p => p.Connected).HasDefaultValue(true);
+            builder.Entity<UserCommon>().HasData
+                (
+                new UserCommon { Id = 100, Name = "Alison", Lastname = "Sempertegui Tuñoque", Email = "Alichip1999@hotmail.com", Date = Convert.ToDateTime("31/08/2000"), Password = "54321" }
+                );
 
+            //CommonChef Entity
+            builder.Entity<CommonChef>().ToTable("CommonsChefs");
+            builder.Entity<CommonChef>().HasKey(p => new { p.CommonId, p.ChefId });
+            builder.Entity<CommonChef>().HasOne(p => p.UserCommon).WithMany(p => p.CommonChefs).HasForeignKey(p=>p.CommonId);
+            builder.Entity<CommonChef>().HasOne(P => P.UserChef).WithMany(p => p.CommonChefs).HasForeignKey(p => p.ChefId);
 
 
         }

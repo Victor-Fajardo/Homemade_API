@@ -11,6 +11,6 @@ namespace Homemade.Domain.Models
         
         public List<Recipe> Recipes { get; set; }
 
-        public List<UserCommon> UserCommons { get; set; }
+        public List<CommonChef> CommonChefs{ get; set; }
     }
 }
