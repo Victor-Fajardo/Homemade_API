@@ -10,5 +10,7 @@ namespace Homemade.Domain.Models
         public Byte[] Certificate { get; set; }
         
         public List<Recipe> Recipes { get; set; }
+
+        public List<UserCommon> UserCommons { get; set; }
     }
 }

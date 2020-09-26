@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Models
 {
-    public class UserCommon
+    public class UserCommon : User
     {
         public List<UserChef> UserChefs;
 
