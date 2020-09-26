@@ -8,7 +8,7 @@ namespace Homemade.Domain.Models
     public class UserCommon : User
     {
 
-        public bool Membership;
+        public bool Membership { get; set; }
 
         public List<Menu> Menus;
 
