@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Models
 {
-    public class UserChef
+    public class UserChef : User
     {
+        public Byte[] Certificate { get; set; }
+        
+        public List<Recipe> Recipes { get; set; }
     }
 }

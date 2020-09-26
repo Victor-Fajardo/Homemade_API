@@ -17,6 +17,8 @@ namespace Homemade.Domain.Models
 
         public string Email { get; set; }
 
+        public Byte[] Picture { get; set; }
+
         public DateTime Date { get; set; }
 
         public bool Gender { get; set; }
