@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Services.Communications
 {
-    public class UserChefResponse : BaseResponse<UserChef>
+    public class CommonChefResponse : BaseResponse<CommonChef>
     {
-        public UserChefResponse(string message) : base(message)
+        public CommonChefResponse(string message) : base(message)
         {
-
-        }
-        public UserChefResponse(UserChef resource): base(resource)
-        {
-
         }
 
+        public CommonChefResponse(CommonChef resource) : base(resource)
+        {
+        }
     }
 }
