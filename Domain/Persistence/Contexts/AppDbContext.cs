@@ -14,6 +14,8 @@ namespace Homemade.Domain.Persistence.Contexts
 
         public DbSet<UserCommon> UserCommons { get; set; }
 
+        public DbSet<CommonChef> CommonChefs { get; set }
+
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
 

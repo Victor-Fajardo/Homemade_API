@@ -10,15 +10,15 @@ namespace Homemade.Domain.Repositories
     {
         Task<IEnumerable<CommonChef>> ListAsync();
         Task<IEnumerable<CommonChef>> ListByCommonIdAsync(int commonnId);
-        Task<IEnumerable<CommonChef>> ListByChefId(int commonId);
+        Task<IEnumerable<CommonChef>> ListByChefId(int chefId);
 
-        Task<CommonChef> FindByCommonIdAndChefId(int commonId, int ChefId);
+        Task<CommonChef> FindByCommonIdAndChefId(int commonId, int chefId);
 
-        Task<CommonChef> AddAsync(CommonChef commonChef);
+        Task AddAsync(CommonChef commonChef);
         void Remove(CommonChef commonChef);
 
-        Task AssignCommonChef(int commonId, int ChefId);
-        void UnassingCommonChef(int commonId, int ChefId);
+        Task AssignCommonChef(int commonId, int chefId);
+        void UnassingCommonChef(int commonId, int chefId);
 
     }
 }
