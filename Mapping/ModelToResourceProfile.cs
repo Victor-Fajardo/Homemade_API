@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Homemade.Domain.Models;
+using Homemade.Resource;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,10 @@ namespace Homemade.Mapping
 {
     public class ModelToResourceProfile : Profile
     {
-        
+        public ModelToResourceProfile()
+        {
+            CreateMap<UserChef, UserChefResource>();
+            CreateMap<UserCommon, UserCommonResource>();
+        }
     }
 }
