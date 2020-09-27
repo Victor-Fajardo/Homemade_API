@@ -12,7 +12,9 @@ namespace Homemade.Domain.Repositories
         Task AddAsync(UserChef userChef);
         Task<UserChef> FindById(int id);
 
-        Task<UserChef> FindByName(string name);
+        Task<IEnumerable<UserChef>> ListByName(string name);
+
+        Task<IEnumerable<UserChef>> ListByLastname(string lastname);
 
         void Update(UserChef userChef);
 
