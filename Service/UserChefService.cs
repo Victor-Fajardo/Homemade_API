@@ -87,6 +87,7 @@ namespace Homemade.Service
             try 
             {
                 _userChefRepository.Update(existingUserChef);
+                return new UserChefResponse(existingUserChef);
             }
             catch(Exception ex)
             {
