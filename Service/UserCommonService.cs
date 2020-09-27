@@ -11,6 +11,7 @@ namespace Homemade.Service
 {
     public class UserCommonService : IUserCommonService
     {
+        private readonly ICommonChefRepository _commonChefRepository;
         private readonly IUserCommonRepository _userCommonRepository;
 public UserCommonService(IUserCommonRepository userCommonRepository)
         {
@@ -54,6 +55,13 @@ public UserCommonService(IUserCommonRepository userCommonRepository)
         public async Task<IEnumerable<UserCommon>> ListAsync()
         {
             return await _userCommonRepository.ListAsync();
+        }
+
+        public async Task<IEnumerable<UserCommon>> ListByUserChefId(int userChefId)
+        {
+            var commonChefs = await _commonChefRepository.ListByChefIdAsync(userChefId);
+            var userCommons = commonChefs.Select(p => p.UserCommon).ToList();
+            return userCommons;
         }
 
         public async Task<UserCommonResponse> SaveAsync(UserCommon userCommon)

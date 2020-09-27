@@ -12,7 +12,7 @@ namespace Homemade.Domain.Services
         Task<IEnumerable<CommonChef>> ListAsync();
 
         Task<IEnumerable<CommonChef>> ListByUserChefIdAsync(int userChefId);
-        Task<IEnumerable<CommonChef>> ListByUserCommonIdAsync(int userCommon);
+        Task<IEnumerable<CommonChef>> ListByUserCommonIdAsync(int userCommonId);
         Task<CommonChefResponse> AssingCommonChefAsync(int userChefId, int userCommonId);
         Task<CommonChefResponse> UnassingCommonChefAsync(int userChefId, int userCommonId);
 

@@ -19,5 +19,9 @@ namespace Homemade.Domain.Services
         Task<UserCommonResponse> SaveAsync(UserCommon userCommon);
         Task<UserCommonResponse> UpdateAsync(int id, UserCommon userCommon);
         Task<UserCommonResponse> DeleteAsync(int id);
+
+        Task<IEnumerable<UserCommon>> ListByUserChefId(int userChefId);
+
+
     }
 }

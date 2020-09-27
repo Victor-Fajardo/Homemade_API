@@ -14,10 +14,12 @@ namespace Homemade.Service
     {
 
         private readonly IUserChefRepository _userChefRepository;
+        private readonly ICommonChefRepository _commonChefRepository;
 
-        public UserChefService(IUserChefRepository userChefRepository)
+        public UserChefService(IUserChefRepository userChefRepository, ICommonChefRepository commonChefRepository)
         {
             _userChefRepository = userChefRepository;
+            _commonChefRepository = commonChefRepository;
         }
 
         public async Task<UserChefResponse> DeleteAsync(int id)
@@ -57,6 +59,13 @@ namespace Homemade.Service
         public async Task<IEnumerable<UserChef>> ListAsync()
         {
             return await _userChefRepository.ListAsync();
+        }
+
+        public async Task<IEnumerable<UserChef>> ListByUserCommonId(int userCommonId)
+        {
+            var commonChefs = await _commonChefRepository.ListByCommonIdAsync(userCommonId);
+            var userChefs = commonChefs.Select(p => p.UserChef).ToList();
+            return userChefs;
         }
 
         public async Task<UserChefResponse> SaveAsync(UserChef userChef)

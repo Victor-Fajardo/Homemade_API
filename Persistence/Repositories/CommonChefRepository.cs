@@ -47,7 +47,7 @@ namespace Homemade.Persistence
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<CommonChef>> ListByChefId(int chefId)
+        public async Task<IEnumerable<CommonChef>> ListByChefIdAsync(int chefId)
         {
             return await _context.CommonChefs
                 .Where(p => p.ChefId == chefId)
