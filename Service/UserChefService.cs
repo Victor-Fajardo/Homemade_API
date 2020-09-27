@@ -92,7 +92,6 @@ namespace Homemade.Service
             catch(Exception ex)
             {
                 return new UserChefResponse($"An error ocurred while updating the UserChef: {ex.Message}");
-
             }
 
 

@@ -32,12 +32,20 @@ namespace Homemade.Persistence.Repositories
 
         public async Task<IEnumerable<UserCommon>> ListByLastnameAsync(string lastname)
         {
-            return await _context.UserCommons.Where(p => p.Lastname == lastname).ToListAsync();
+            return await _context.UserCommons
+                .Where(p => p.Lastname == lastname)
+                .Include(p=>p.Name)
+                .Include(p => p.Lastname)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<UserCommon>> ListByNameAsync(string name)
         {
-            return await _context.UserCommons.Where(p=>p.Name == name).ToListAsync();
+            return await _context.UserCommons
+                .Where(p=>p.Name == name)
+                .Include(p => p.Name)
+                .Include(p => p.Lastname)
+                .ToListAsync();
         }
 
         public void Remove(UserCommon userCommon)

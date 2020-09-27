@@ -1,4 +1,5 @@
 ﻿using Homemade.Domain.Models;
+using Homemade.Domain.Repositories;
 using Homemade.Domain.Services;
 using Homemade.Domain.Services.Communications;
 using System;
@@ -10,44 +11,85 @@ namespace Homemade.Service
 {
     public class UserCommonService : IUserCommonService
     {
-        public Task<UserCommonResponse> DeleteAsync(int id)
+        private readonly IUserCommonRepository _userCommonRepository;
+public UserCommonService(IUserCommonRepository userCommonRepository)
         {
-            throw new NotImplementedException();
+            _userCommonRepository = userCommonRepository;
         }
 
-        public Task<UserCommonResponse> GetByIdAsync(int id)
+        public async Task<UserCommonResponse> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingUserCommon = await _userCommonRepository.FindById(id);
+            if (existingUserCommon == null)
+                return new UserCommonResponse("UserCommon not found");
+            try
+            {
+                _userCommonRepository.Remove(existingUserCommon);
+                return new UserCommonResponse(existingUserCommon);
+            }
+            catch (Exception ex)
+            {
+                return new UserCommonResponse($"An error ocurred while deleting UserCommon: {ex.Message}");
+            }
         }
 
-        public Task<UserCommonResponse> GetByLastnameAsync(string lastname)
+        public async Task<UserCommonResponse> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingUserCommon = await _userCommonRepository.FindById(id);
+            if (existingUserCommon == null)
+                return new UserCommonResponse("UserCommon not found");
+            return new UserCommonResponse(existingUserCommon);
         }
 
-        public Task<UserCommonResponse> GetByNameAsync(string name)
+        public async Task<IEnumerable<UserCommon>> GetByLastnameAsync(string lastname)
         {
-            throw new NotImplementedException();
+            return await _userCommonRepository.ListByLastnameAsync(lastname);
         }
 
-        public Task<IEnumerable<UserCommon>> ListAsync()
+        public async Task<IEnumerable<UserCommon>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await _userCommonRepository.ListByNameAsync(name);
         }
 
-        public Task<IEnumerable<UserCommon>> ListByUserChefIdAsync(int userChefId)
+        public async Task<IEnumerable<UserCommon>> ListAsync()
         {
-            throw new NotImplementedException();
+            return await _userCommonRepository.ListAsync();
         }
 
-        public Task<UserCommonResponse> SaveAsync(UserCommon userCommon)
+        public async Task<UserCommonResponse> SaveAsync(UserCommon userCommon)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _userCommonRepository.AddAsync(userCommon);
+                return new UserCommonResponse(userCommon);
+            }
+            catch (Exception ex)
+            {
+                return new UserCommonResponse($"An error ocurred while saving the UserCommon: {ex.Message}");
+            }
         }
 
-        public Task<UserCommonResponse> UpdateAsync(int id, UserCommon userCommon)
+        public async Task<UserCommonResponse> UpdateAsync(int id, UserCommon userCommon)
         {
-            throw new NotImplementedException();
+            var existingUserCommon = await _userCommonRepository.FindById(id);
+            if (existingUserCommon == null)
+                return new UserCommonResponse("UserChef not found");
+            existingUserCommon.Name = userCommon.Name;
+            existingUserCommon.Lastname = userCommon.Lastname;
+            existingUserCommon.Membership = userCommon.Membership;
+            existingUserCommon.Email = userCommon.Email;
+            existingUserCommon.Password = userCommon.Password;
+            existingUserCommon.Picture = userCommon.Picture;
+            existingUserCommon.Date = userCommon.Date;
+            try
+            {
+                _userCommonRepository.Update(existingUserCommon);
+                return new UserCommonResponse(existingUserCommon);
+            }
+            catch (Exception ex)
+            {
+                return new UserCommonResponse($"An error ocurred while updating the UserCommon: {ex.Message}");
+            }
         }
     }
 }

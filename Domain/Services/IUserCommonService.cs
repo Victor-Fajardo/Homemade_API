@@ -11,13 +11,11 @@ namespace Homemade.Domain.Services
     {
         Task<IEnumerable<UserCommon>> ListAsync();
 
-        Task<IEnumerable<UserCommon>> ListByUserChefIdAsync(int userChefId);
-
         Task<UserCommonResponse> GetByIdAsync(int id);
 
-        Task<UserCommonResponse> GetByNameAsync(string name);
+        Task<IEnumerable<UserCommon>> GetByNameAsync(string name);
 
-        Task<UserCommonResponse> GetByLastnameAsync(string lastname);
+        Task<IEnumerable<UserCommon>> GetByLastnameAsync(string lastname);
         Task<UserCommonResponse> SaveAsync(UserCommon userCommon);
         Task<UserCommonResponse> UpdateAsync(int id, UserCommon userCommon);
         Task<UserCommonResponse> DeleteAsync(int id);
