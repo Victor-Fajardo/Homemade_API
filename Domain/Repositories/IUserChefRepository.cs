@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Repositories
 {
-    interface IUserChefRepository
+    public interface IUserChefRepository
     {
         Task<IEnumerable<UserChef>> ListAsync();
         Task AddAsync(UserChef userChef);

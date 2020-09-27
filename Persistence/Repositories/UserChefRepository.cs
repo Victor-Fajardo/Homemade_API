@@ -28,12 +28,19 @@ namespace Homemade.Persistence.Repositories
         public async Task<IEnumerable<UserChef>> ListByName(string name)
         {
 
-            return await _context.UserChefs.Where(b => b.Name == name).ToListAsync(); 
+            return await _context.UserChefs.Where(b => b.Name == name)
+                .Include(p => p.Name)
+                .Include(p => p.Lastname)
+                .ToListAsync(); 
         }
 
         public async Task<IEnumerable<UserChef>> ListByLastname(string lastname) 
         {
-            return await _context.UserChefs.Where(b => b.Lastname == lastname ).ToListAsync();
+            return await _context.UserChefs
+                .Where(b => b.Lastname == lastname )
+                .Include(p=>p.Name)
+                .Include(p => p.Lastname)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<UserChef>> ListAsync()
