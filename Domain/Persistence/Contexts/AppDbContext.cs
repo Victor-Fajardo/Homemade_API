@@ -62,6 +62,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<CommonChef>().HasOne(P => P.UserChef).WithMany(p => p.CommonChefs).HasForeignKey(p => p.ChefId);
 
 
+            
         }
 
     }
