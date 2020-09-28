@@ -27,7 +27,7 @@ namespace Homemade.Domain.Models
 
         //public List<Message> Messages { get; set; }
 
-        //public List<Publication> Publications { get; set; }
+        public List<Publication> Publications { get; set; }
 
         //public List<ChatUser> ChatUsers { get; set; }
 

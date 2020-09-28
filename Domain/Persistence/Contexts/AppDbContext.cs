@@ -18,7 +18,7 @@ namespace Homemade.Domain.Persistence.Contexts
 
         public DbSet<User> Users { get; set; }
         public DbSet<Publication> Publications { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        //public DbSet<Comment> Comments { get; set; }
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
@@ -89,7 +89,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Publication>().Property(p => p.Likes).IsRequired();
             builder.Entity<Publication>().Property(p => p.File).IsRequired();
             builder.Entity<Publication>().HasOne(p => p.User).WithMany(p => p.Publications).HasForeignKey(p => p.UserId);
-            builder.Entity<Publication>().HasMany(p => p.Comments).WithOne(p => p.Publication).HasForeignKey(p => p.PublicationId);
+            ///builder.Entity<Publication>().HasMany(pt => pt.Comments).WithOne(p => p.Publication).HasForeignKey(pt => pt.PublicationId);
 
         }
 
