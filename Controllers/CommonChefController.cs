@@ -52,14 +52,7 @@ namespace Homemade.Controllers
             return Ok(resource);
         }
 
-        [HttpPost("{userCommonId}/{userChefId}")]
-        public async Task<IActionResult> UnassingCommonUserAsync (int userCommonId, int userChefId)
-        {
-            var result = await _commonChefService.UnassingCommonChefAsync(userCommonId, userChefId);
-            if (!result.Succes)
-                return BadRequest(result.Message);
-            return Ok(result);
-        }
+        
 
     }
 }
