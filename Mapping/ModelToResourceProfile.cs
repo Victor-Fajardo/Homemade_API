@@ -12,6 +12,7 @@ namespace Homemade.Mapping
     {
         public ModelToResourceProfile()
         {
+            CreateMap<Ingredient, IngredientResource>();
             CreateMap<UserChef, UserChefResource>();
             CreateMap<UserCommon, UserCommonResource>();
         }

@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Homemade.Domain.Models;
+using Homemade.Domain.Services;
+using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,11 +16,23 @@ namespace Homemade.Controllers
     [ApiController]
     public class IngredientController : ControllerBase
     {
+        private readonly IIngredientService _ingredientService;
+        private readonly IMapper _mapper;
+
+        public IngredientController(IIngredientService ingredientService, IMapper mapper)
+        {
+            _ingredientService = ingredientService;
+            _mapper = mapper;
+        }
+
         // GET: api/<IngredientController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<IngredientResource>> GetAllAsync()
         {
-            return new string[] { "value1", "value2" };
+            var ingredients = await _ingredientService.ListAsync();
+            var resource = _mapper.Map<IEnumerable<Ingredient>,
+                IEnumerable<IngredientResource>>(ingredients);
+            return resource;
         }
 
         // GET api/<IngredientController>/5
