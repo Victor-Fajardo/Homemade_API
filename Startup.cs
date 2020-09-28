@@ -32,14 +32,9 @@ namespace Homemade
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseInMemoryDatabase("homemade-api-in-memory");
+                options.UseInMemoryDatabase("Homemade-api-in-memory");
                 //options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
             });
-
-            //Ingredients
-            services.AddScoped<IIngredientService, IngredientService>();
-            services.AddScoped<IIngredientRepository, IngredientRepository>();
-
 
             // Repositories
             services.AddScoped<IUserChefRepository, UserChefRepository>();

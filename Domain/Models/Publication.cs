@@ -8,11 +8,12 @@ namespace Homemade.Domain.Models
     public class Publication
     {
         public int Id { get; set;}
-        public User author {get; set;}
-        public DateTime publicationdate {get; set;}
-        public string text{get; set;}
-        public List<Comment> comments;
-        public int likes {get; set;}
-        public Byte[] file{get; set;}
+        public User User {get; set;}
+        public DateTime Publicationdate {get; set;}
+        public string Text{get; set;}
+        public int UserId { get; set; }
+        //public List<Comment> Comments;
+        public int Likes {get; set;}
+        public Byte[] File{get; set;}
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Homemade.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class UserChefController : ControllerBase
     {

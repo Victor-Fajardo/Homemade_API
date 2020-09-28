@@ -11,10 +11,13 @@ namespace Homemade.Service
 {
     public class UserCommonService : IUserCommonService
     {
-        private readonly ICommonChefRepository _commonChefRepository;
         private readonly IUserCommonRepository _userCommonRepository;
-public UserCommonService(IUserCommonRepository userCommonRepository)
+        private readonly ICommonChefRepository _commonChefRepository;
+
+
+        public UserCommonService(ICommonChefRepository commonChefRepository, IUserCommonRepository userCommonRepository)
         {
+            _commonChefRepository = commonChefRepository;
             _userCommonRepository = userCommonRepository;
         }
 
