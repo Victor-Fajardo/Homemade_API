@@ -16,23 +16,55 @@ namespace Homemade.Controllers
     [Route("api/[controller]")]
     public class CommonChefController : ControllerBase
     {
+        private readonly IUserCommonService _userCommonService;
         private readonly IUserChefService _userChefService;
         private readonly ICommonChefService _commonChefService;
         private readonly IMapper _mapper;
 
-        public CommonChefController(IUserChefService userChefService, ICommonChefService commonChefService, IMapper mapper)
+        public CommonChefController(IUserCommonService userCommonService, IUserChefService userChefService, ICommonChefService commonChefService, IMapper mapper)
         {
+            _userCommonService = userCommonService;
             _userChefService = userChefService;
             _commonChefService = commonChefService;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<UserChefResource>> GetAllByUsersCommondAsync(int userCommonId)
+        [HttpGet]
+        public async Task<IEnumerable<UserChefResource>> GetAllByUsersCommondIdAsync(int userCommonId)
         {
             var userChefs = await _userChefService.ListByUserCommonId(userCommonId);
             var resource = _mapper
                 .Map<IEnumerable<UserChef>, IEnumerable<UserChefResource>>(userChefs);
             return resource;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<UserChefResource>> GetAllByUsersChefIdAsync(int userchefId)
+        {
+            var userCommons = await _userCommonService.ListByUserChefId(userchefId);
+            var resource = _mapper
+                .Map<IEnumerable<UserCommon>, IEnumerable<UserChefResource>>(userCommons);
+            return resource;
+        }
+
+        [HttpPost("{userCommonId}/{userChefId}")]
+        public async Task<IActionResult> AssignUserChef(int userCommonId, int userChefId)
+        {
+            var result = await _commonChefService.AssingCommonChefAsync(userCommonId, userChefId);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            UserChef userChef = _userChefService.GetByIdAsync(userChefId).Result.Resource;
+            var resource = _mapper.Map<UserChef, UserChefResource>(userChef);
+            return Ok(resource);
+        }
+
+        [HttpPost("{userCommonId}/{userChefId}")]
+        public async Task<IActionResult> UnassingCommonUserAsync (int userCommonId, int userChefId)
+        {
+            var result = await _commonChefService.UnassingCommonChefAsync(userCommonId, userChefId);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            return Ok(result);
         }
 
     }

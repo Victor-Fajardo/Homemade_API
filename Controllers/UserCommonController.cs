@@ -36,6 +36,25 @@ namespace Homemade.Controllers
             return resource;
         }
 
+
+        [HttpGet("{name}")]
+        public async Task<IEnumerable<UserCommonResource>> GetAllByName(string name)
+        {
+            var userCommons = await _userCommonService.GetByNameAsync(name);
+            var resource = _mapper
+                .Map<IEnumerable<UserCommon>, IEnumerable<UserCommonResource>>(userCommons);
+            return resource;
+        }
+
+        [HttpGet("{lastname}")]
+        public async Task<IEnumerable<UserCommonResource>> GetAllByLastname(string lastname)
+        {
+            var userCommons = await _userCommonService.GetByLastnameAsync(lastname);
+            var resource = _mapper
+                .Map<IEnumerable<UserCommon>, IEnumerable<UserCommonResource>>(userCommons);
+            return resource;
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserCommonResource resource)
         {
@@ -52,7 +71,7 @@ namespace Homemade.Controllers
             return Ok(userCommonResource);
         }
 
-        [HttpPost]
+        [HttpPut("id")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserCommonResource resource)
         {
             var userCommon = _mapper.Map<SaveUserCommonResource, UserCommon>(resource);
@@ -73,6 +92,7 @@ namespace Homemade.Controllers
             return Ok(userCommonResource);
         }
 
+        
 
 
 

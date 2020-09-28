@@ -35,6 +35,27 @@ namespace Homemade.Controllers
                 .Map<IEnumerable<UserChef>, IEnumerable < UserChefResource >> (userChefs);
             return resource;
         }
+
+
+        [HttpGet("{name}")]
+        public async Task<IEnumerable<UserChefResource>> GetAllByName(string name)
+        {
+            var userChefs = await _userChefService.GetByNameAsync(name);
+            var resource = _mapper
+                .Map<IEnumerable<UserChef>, IEnumerable<UserChefResource>>(userChefs);
+            return resource;
+        }
+
+        [HttpGet("{lastname}")]
+        public async Task<IEnumerable<UserChefResource>> GetAllByLastname(string lastname)
+        {
+            var userChefs = await _userChefService.GetByLastnameAsync(lastname);
+            var resource = _mapper
+                .Map<IEnumerable<UserChef>, IEnumerable<UserChefResource>>(userChefs);
+            return resource;
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserChefResource resource)
         {
@@ -51,7 +72,7 @@ namespace Homemade.Controllers
             return Ok(userChefResource );
         }
 
-        [HttpPost]
+        [HttpPut("id")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserChefResource resource)
         {
             var userChef = _mapper.Map<SaveUserChefResource, UserChef>(resource);
@@ -72,37 +93,5 @@ namespace Homemade.Controllers
             return Ok(userChefResource);
         }
 
-
-        // GET: api/<UserChefController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<UserChefController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<UserChefController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<UserChefController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserChefController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
