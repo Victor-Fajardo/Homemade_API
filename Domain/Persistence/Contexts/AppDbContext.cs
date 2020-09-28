@@ -10,6 +10,7 @@ namespace Homemade.Domain.Persistence.Contexts
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<UserChef> UserChefs { get; set; }
 
         public DbSet<UserCommon> UserCommons { get; set; }
@@ -28,6 +29,17 @@ namespace Homemade.Domain.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder builder) 
         {
             base.OnModelCreating(builder);
+
+            //Ingredient Entity
+            builder.Entity<Ingredient>().ToTable("Ingredients");
+            builder.Entity<Ingredient>().HasKey(p => p.Id);
+            builder.Entity<Ingredient>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Ingredient>().Property(p => p.Name).IsRequired().HasMaxLength(40);
+            builder.Entity<Ingredient>().Property(p => p.UnitOfMeasurement).IsRequired();
+            builder.Entity<Ingredient>().HasData
+                (
+                new Ingredient { Id = 100, Name = "Sal de Mesa", UnitOfMeasurement = EUnitOfMeasurement.Gram}
+                );
 
             //User Entity
             builder.Entity<User>().ToTable("Users")
