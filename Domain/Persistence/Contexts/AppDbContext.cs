@@ -61,7 +61,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<UserChef>().Property(p => p.Password).IsRequired();
             builder.Entity<UserChef>().HasData
                 (
-                new UserChef { Id = 100, Name = "Aaron", Lastname = "Alva Caffo", Email = "aaron_caffo@hotmail.com", Date = Convert.ToDateTime("31/03/2000"), Password = "12345" }
+                new UserChef { Id = 100, Name = "Aaron", Lastname = "Alva Caffo", Email = "aaron_caffo@hotmail.com", Date = Convert.ToDateTime("05/03/2000"), Password = "12345" }
                 );
 
             //UserCommon Entity 
@@ -77,7 +77,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<UserCommon>().Property(p => p.Connected).HasDefaultValue(true);
             builder.Entity<UserCommon>().HasData
                 (
-                new UserCommon { Id = 101, Name = "Alison", Lastname = "Sempertegui Tuñoque", Email = "Alichip1999@hotmail.com", Date = Convert.ToDateTime("31/08/2000"), Password = "54321" }
+                new UserCommon { Id = 101, Name = "Alison", Lastname = "Sempertegui Tuñoque", Email = "Alichip1999@hotmail.com", Date = Convert.ToDateTime("05/08/2000"), Password = "54321" }
                 );
 
             //CommonChef Entity
