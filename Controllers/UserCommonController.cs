@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Homemade.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class UserCommonController : ControllerBase
     {
@@ -30,9 +31,9 @@ namespace Homemade.Controllers
         [HttpGet]
         public async Task<IEnumerable<UserCommonResource>> GetAllAsync() 
         {
-            var userCommon = await _userCommonService.ListAsync();
+            var userCommons = await _userCommonService.ListAsync();
             var resource = _mapper
-                .Map<IEnumerable<UserCommon>, IEnumerable<UserCommonResource>>(userCommon);
+                .Map<IEnumerable<UserCommon>, IEnumerable<UserCommonResource>>(userCommons);
             return resource;
         }
 
@@ -54,6 +55,8 @@ namespace Homemade.Controllers
                 .Map<IEnumerable<UserCommon>, IEnumerable<UserCommonResource>>(userCommons);
             return resource;
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserCommonResource resource)
@@ -92,44 +95,6 @@ namespace Homemade.Controllers
             return Ok(userCommonResource);
         }
 
-        
 
-
-
-
-
-
-
-        // GET: api/<UserCommonController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<UserCommonController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<UserCommonController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<UserCommonController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UserCommonController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

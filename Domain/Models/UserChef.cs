@@ -9,7 +9,7 @@ namespace Homemade.Domain.Models
     {
         public Byte[] Certificate { get; set; }
         
-        public List<Recipe> Recipes { get; set; }
+        //public List<Recipe> Recipes { get; set; }
 
         public List<CommonChef> CommonChefs{ get; set; }
     }

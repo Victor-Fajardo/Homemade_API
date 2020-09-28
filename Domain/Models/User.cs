@@ -25,11 +25,11 @@ namespace Homemade.Domain.Models
 
         public bool Connected { get; set; }
 
-        public List<Message> Messages { get; set; }
+        //public List<Message> Messages { get; set; }
 
-        public List<Publication> Publications { get; set; }
+        //public List<Publication> Publications { get; set; }
 
-        public List<ChatUser> ChatUsers { get; set; }
+        //public List<ChatUser> ChatUsers { get; set; }
 
     }
 }

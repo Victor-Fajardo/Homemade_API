@@ -27,9 +27,19 @@ namespace Homemade.Domain.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder builder) 
         {
             base.OnModelCreating(builder);
+
+            //User Entity
+            builder.Entity<User>().ToTable("Users")
+                .HasDiscriminator<int>("UserType")
+                .HasValue<UserChef>(1)
+                .HasValue<UserCommon>(2);
+            builder.Entity<User>().HasKey(p => p.Id);
+
+
             //UserChef Entity
+            builder.Entity<UserChef>().HasBaseType<User>();
             builder.Entity<UserChef>().ToTable("UserChefs");
-            builder.Entity<UserChef>().HasKey(p => p.Id);
+            //builder.Entity<UserChef>().HasKey(p => p.Id);
             builder.Entity<UserChef>().Property(P => P.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<UserChef>().Property(p => p.Name).IsRequired().HasMaxLength(40);
             builder.Entity<UserChef>().Property(p => p.Lastname).IsRequired().HasMaxLength(50);
@@ -42,8 +52,9 @@ namespace Homemade.Domain.Persistence.Contexts
                 );
 
             //UserCommon Entity 
+            builder.Entity<UserCommon>().HasBaseType<User>();
             builder.Entity<UserCommon>().ToTable("UserCommons");
-            builder.Entity<UserCommon>().Property(P => P.Id).IsRequired().ValueGeneratedOnAdd();
+            //builder.Entity<UserCommon>().Property(P => P.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<UserCommon>().Property(p => p.Name).IsRequired().HasMaxLength(40);
             builder.Entity<UserCommon>().Property(p => p.Lastname).IsRequired().HasMaxLength(50);
             builder.Entity<UserCommon>().Property(p => p.Email).IsRequired();
@@ -53,14 +64,20 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<UserCommon>().Property(p => p.Connected).HasDefaultValue(true);
             builder.Entity<UserCommon>().HasData
                 (
-                new UserCommon { Id = 100, Name = "Alison", Lastname = "Sempertegui Tuñoque", Email = "Alichip1999@hotmail.com", Date = Convert.ToDateTime("31/08/2000"), Password = "54321" }
+                new UserCommon { Id = 101, Name = "Alison", Lastname = "Sempertegui Tuñoque", Email = "Alichip1999@hotmail.com", Date = Convert.ToDateTime("31/08/2000"), Password = "54321" }
                 );
 
             //CommonChef Entity
             builder.Entity<CommonChef>().ToTable("CommonsChefs");
-            builder.Entity<CommonChef>().HasKey(p => new { p.CommonId, p.ChefId });
-            builder.Entity<CommonChef>().HasOne(p => p.UserCommon).WithMany(p => p.CommonChefs).HasForeignKey(p=>p.CommonId);
-            builder.Entity<CommonChef>().HasOne(P => P.UserChef).WithMany(p => p.CommonChefs).HasForeignKey(p => p.ChefId);
+            builder.Entity<CommonChef>().HasKey(pt => new { pt.CommonId, pt.ChefId });
+            builder.Entity<CommonChef>()
+                .HasOne(pt => pt.UserChef)
+                .WithMany(p => p.CommonChefs)
+                .HasForeignKey(pt => pt.CommonId);
+            builder.Entity<CommonChef>()
+                .HasOne(Pt => Pt.UserChef)
+                .WithMany(p => p.CommonChefs)
+                .HasForeignKey(pt => pt.ChefId);
 
 
             

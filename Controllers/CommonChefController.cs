@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Homemade.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class CommonChefController : ControllerBase
     {
@@ -29,14 +30,7 @@ namespace Homemade.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<UserChefResource>> GetAllByUsersCommondIdAsync(int userCommonId)
-        {
-            var userChefs = await _userChefService.ListByUserCommonId(userCommonId);
-            var resource = _mapper
-                .Map<IEnumerable<UserChef>, IEnumerable<UserChefResource>>(userChefs);
-            return resource;
-        }
+        
 
         [HttpGet]
         public async Task<IEnumerable<UserChefResource>> GetAllByUsersChefIdAsync(int userchefId)
