@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Repositories
 {
-    public interface ICommentRepository
+    public interface IUnitOfWork
     {
+        Task CompleteAsync();
     }
 }

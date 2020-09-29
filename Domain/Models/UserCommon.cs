@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Models
 {
-    public class UserCommon
+    public class UserCommon : User
     {
+
+        public bool Membership { get; set; }
+
+        //public List<Menu> Menus;
+
+        //public List<Payment> Payments;
+
+        public List<CommonChef> CommonChefs;
+
     }
 }

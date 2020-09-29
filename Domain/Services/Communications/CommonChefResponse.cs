@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Services.Communications
 {
-    public class IngredientResponse : BaseResponse<Ingredient>
+    public class CommonChefResponse : BaseResponse<CommonChef>
     {
-        public IngredientResponse(Ingredient resource) : base(resource)
+        public CommonChefResponse(string message) : base(message)
         {
         }
-        public IngredientResponse(string message) : base(message)
+
+        public CommonChefResponse(CommonChef resource) : base(resource)
         {
         }
     }
