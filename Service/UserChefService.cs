@@ -15,11 +15,13 @@ namespace Homemade.Service
 
         private readonly IUserChefRepository _userChefRepository;
         private readonly ICommonChefRepository _commonChefRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserChefService(IUserChefRepository userChefRepository, ICommonChefRepository commonChefRepository)
+        public UserChefService(IUserChefRepository userChefRepository, ICommonChefRepository commonChefRepository, IUnitOfWork unitOfWork)
         {
             _userChefRepository = userChefRepository;
             _commonChefRepository = commonChefRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<UserChefResponse> DeleteAsync(int id)
@@ -30,6 +32,7 @@ namespace Homemade.Service
             try 
             {
                 _userChefRepository.Remove(existingUserChef);
+                await _unitOfWork.CompleteAsync();
                 return new UserChefResponse(existingUserChef);
             }
             catch(Exception ex)
@@ -73,6 +76,7 @@ namespace Homemade.Service
             try
             {
                 await _userChefRepository.AddAsync(userChef);
+                await _unitOfWork.CompleteAsync();
                 return new UserChefResponse(userChef);
             }
             catch(Exception ex)
@@ -96,6 +100,7 @@ namespace Homemade.Service
             try 
             {
                 _userChefRepository.Update(existingUserChef);
+                await _unitOfWork.CompleteAsync();
                 return new UserChefResponse(existingUserChef);
             }
             catch(Exception ex)
