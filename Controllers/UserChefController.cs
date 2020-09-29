@@ -38,7 +38,7 @@ namespace Homemade.Controllers
         }
 
 
-        [HttpGet("{name}")]
+        [HttpGet("name/{name}")]
         public async Task<IEnumerable<UserChefResource>> GetAllByName(string name)
         {
             var userChefs = await _userChefService.GetByNameAsync(name);
@@ -47,7 +47,7 @@ namespace Homemade.Controllers
             return resource;
         }
 
-        [HttpGet("{lastname}")]
+        [HttpGet("lastmane/{lastname}")]
         public async Task<IEnumerable<UserChefResource>> GetAllByLastname(string lastname)
         {
             var userChefs = await _userChefService.GetByLastnameAsync(lastname);
