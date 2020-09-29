@@ -23,7 +23,6 @@ namespace Homemade.Domain.Persistence.Contexts
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder) 

@@ -11,13 +11,13 @@ namespace Homemade.Domain.Services.Communications
         public string Message { get; protected set; }
         public T Resource { get; set; }
 
-        protected BaseResponse(T resource)
+        public BaseResponse(T resource)
         {
+            Resource = resource;
             Succes = true;
             Message = string.Empty;
-            Resource = resource;
         }
-        protected BaseResponse(string message)
+        public BaseResponse(string message)
         {
             Succes = false;
             Message = message;

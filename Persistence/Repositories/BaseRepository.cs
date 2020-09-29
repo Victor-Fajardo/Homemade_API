@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Homemade.Persistence.Repositories
 {
-    public class BaseRepository
+    public abstract class BaseRepository
     {
         protected readonly AppDbContext _context;
         public BaseRepository(AppDbContext context)

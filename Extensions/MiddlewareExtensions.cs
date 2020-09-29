@@ -34,7 +34,7 @@ namespace Homemade.Extensions
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/api-docs/v1/swagger.json", "Supermarket API V1");
+                c.SwaggerEndpoint("/api-docs/v1/swagger.json", "Homemade API V1");
                 c.RoutePrefix = "api-docs/v1";
             });
             return app;
