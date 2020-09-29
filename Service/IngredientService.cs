@@ -11,11 +11,13 @@ namespace Homemade.Service
 {
     public class IngredientService : IIngredientService
     {
-        public readonly IIngredientRepository _ingredientRepository;
+        private readonly IIngredientRepository _ingredientRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public IngredientService(IIngredientRepository ingredientRepository)
+        public IngredientService(IIngredientRepository ingredientRepository, IUnitOfWork unitOfWork)
         {
             _ingredientRepository = ingredientRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<IngredientResponse> DeleteAsync(int id)
         {
@@ -25,6 +27,7 @@ namespace Homemade.Service
             try
             {
                 _ingredientRepository.Remove(existingIngredient);
+                await _unitOfWork.CompleteAsync();
                 return new IngredientResponse(existingIngredient);
             }
             catch(Exception ex)
@@ -51,6 +54,7 @@ namespace Homemade.Service
             try
             {
                 await _ingredientRepository.AddAsync(ingredient);
+                await _unitOfWork.CompleteAsync();
                 return new IngredientResponse(ingredient);
             }
             catch (Exception ex)
@@ -68,6 +72,7 @@ namespace Homemade.Service
             try
             {
                 _ingredientRepository.Update(existingIngredient);
+                await _unitOfWork.CompleteAsync();
                 return new IngredientResponse(existingIngredient);
             }
             catch (Exception ex)

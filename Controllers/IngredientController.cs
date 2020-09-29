@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Homemade.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class IngredientController : ControllerBase
     {

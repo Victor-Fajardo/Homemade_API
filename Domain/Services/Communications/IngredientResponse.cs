@@ -8,13 +8,11 @@ namespace Homemade.Domain.Services.Communications
 {
     public class IngredientResponse : BaseResponse<Ingredient>
     {
-        public IngredientResponse(string message) : base(message)
-        {
-
-        }
         public IngredientResponse(Ingredient resource) : base(resource)
         {
-
+        }
+        public IngredientResponse(string message) : base(message)
+        {
         }
     }
 }
