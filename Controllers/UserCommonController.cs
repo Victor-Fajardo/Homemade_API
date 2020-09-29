@@ -8,6 +8,7 @@ using Homemade.Domain.Services;
 using Homemade.Extensions;
 using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,9 +28,16 @@ namespace Homemade.Controllers
             _mapper = mapper;
         }
 
-
+        [SwaggerOperation(
+             Summary = "List all users common",
+             Description = "List of users common",
+             OperationId = "ListAllUsersCommon",
+             Tags = new[] { "Users Common" }
+             )]
+        [SwaggerResponse(200, "List of Users Common", typeof(IEnumerable<UserCommonResource>))]
+        [ProducesResponseType(typeof(IEnumerable<UserCommonResource>), 200)]
         [HttpGet]
-        public async Task<IEnumerable<UserCommonResource>> GetAllAsync() 
+        public async Task<IEnumerable<UserCommonResource>> GetAllAsync()
         {
             var userCommons = await _userCommonService.ListAsync();
             var resource = _mapper
@@ -37,8 +45,15 @@ namespace Homemade.Controllers
             return resource;
         }
 
-
-        [HttpGet("{name}")]
+        [SwaggerOperation(
+            Summary = "List all by Users Common Name",
+            Description = "List by Users Common Name",
+            OperationId = "ListAllByUsersCommonName",
+            Tags = new[] { "Users Common" }
+        )]
+        [SwaggerResponse(200, "List of users common by name", typeof(UserCommonResource))]
+        [ProducesResponseType(typeof(IEnumerable<UserCommonResource>), 200)]
+        [HttpGet("name/{name}")]
         public async Task<IEnumerable<UserCommonResource>> GetAllByName(string name)
         {
             var userCommons = await _userCommonService.GetByNameAsync(name);
@@ -47,7 +62,15 @@ namespace Homemade.Controllers
             return resource;
         }
 
-        [HttpGet("{lastname}")]
+        [SwaggerOperation(
+            Summary = "List all by Users Common Lastname",
+            Description = "List by Users Common Lastname",
+            OperationId = "ListAllByUsersCommonLastname",
+            Tags = new[] { "Users Common" }
+        )]
+        [SwaggerResponse(200, "List of users common by lastname", typeof(UserCommonResource))]
+        [ProducesResponseType(typeof(IEnumerable<UserCommonResource>), 200)]
+        [HttpGet("lastname/{lastname}")]
         public async Task<IEnumerable<UserCommonResource>> GetAllByLastname(string lastname)
         {
             var userCommons = await _userCommonService.GetByLastnameAsync(lastname);
@@ -57,7 +80,13 @@ namespace Homemade.Controllers
         }
 
 
-
+        [SwaggerOperation(
+            Summary = "Create a User Common",
+            Description = "Create a User Common",
+            OperationId = "CreateUserCommon",
+            Tags = new[] { "Users Common" }
+        )]
+        [SwaggerResponse(200, "User common was created", typeof(UserCommonResource))]
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserCommonResource resource)
         {
@@ -73,7 +102,13 @@ namespace Homemade.Controllers
             var userCommonResource = _mapper.Map<UserCommon, UserCommonResource>(result.Resource);
             return Ok(userCommonResource);
         }
-
+        [SwaggerOperation(
+           Summary = "Update a User Common",
+           Description = "Update a User Common",
+           OperationId = "UpdateUserCommon",
+           Tags = new[] { "Users Common" }
+       )]
+        [SwaggerResponse(200, "User common was updated", typeof(UserCommonResource))]
         [HttpPut("id")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserCommonResource resource)
         {
@@ -85,7 +120,14 @@ namespace Homemade.Controllers
             return Ok(userCommonResource);
         }
 
-        [HttpGet("{id}")]
+        [SwaggerOperation(
+            Summary = "Delete a User Common",
+            Description = "Delete a User Common",
+            OperationId = "DeleteUserCommon",
+            Tags = new[] { "Users Common" }
+        )]
+        [SwaggerResponse(200, "User Common was delete", typeof(UserCommonResource))]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _userCommonService.DeleteAsync(id);

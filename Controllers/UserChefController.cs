@@ -9,6 +9,7 @@ using Homemade.Domain.Services;
 using Homemade.Extensions;
 using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,16 +29,30 @@ namespace Homemade.Controllers
             _mapper = mapper;
         }
 
+        [SwaggerOperation(
+             Summary = "List all users chefs",
+             Description = "List of users chefs",
+             OperationId = "ListAllUsersChefs",
+             Tags = new[] { "Users Chefs" }
+             )]
+        [SwaggerResponse(200, "List of Users Chefs", typeof(IEnumerable<UserChefResource>))]
+        [ProducesResponseType(typeof(IEnumerable<UserChefResource>), 200)]
         [HttpGet]
-        public async Task<IEnumerable<UserChefResource>> GetAllAsync() 
+        public async Task<IEnumerable<UserChefResource>> GetAllAsync()
         {
             var userChefs = await _userChefService.ListAsync();
             var resource = _mapper
-                .Map<IEnumerable<UserChef>, IEnumerable < UserChefResource >> (userChefs);
+                .Map<IEnumerable<UserChef>, IEnumerable<UserChefResource>>(userChefs);
             return resource;
         }
 
-
+        [SwaggerOperation(
+            Summary = "List all by Chefs Name",
+            Description = "List by Chefs name",
+            OperationId = "ListAllByChefsName",
+            Tags = new[] { "Users Chefs" }
+        )]
+        [SwaggerResponse(200, "List of chefs users by name", typeof(UserChefResource))]
         [HttpGet("name/{name}")]
         public async Task<IEnumerable<UserChefResource>> GetAllByName(string name)
         {
@@ -47,7 +62,14 @@ namespace Homemade.Controllers
             return resource;
         }
 
-        [HttpGet("lastmane/{lastname}")]
+        [SwaggerOperation(
+            Summary = "List all by Chefs Lastname",
+            Description = "List by Chefs Lastname",
+            OperationId = "ListAllByChefsLastname",
+            Tags = new[] { "Users Chefs" }
+        )]
+        [SwaggerResponse(200, "List of chefs users by lastname", typeof(UserChefResource))]
+        [HttpGet("lastname/{lastname}")]
         public async Task<IEnumerable<UserChefResource>> GetAllByLastname(string lastname)
         {
             var userChefs = await _userChefService.GetByLastnameAsync(lastname);
@@ -56,7 +78,13 @@ namespace Homemade.Controllers
             return resource;
         }
 
-
+        [SwaggerOperation(
+            Summary = "Save a User Chef",
+            Description = "Save a User Chef",
+            OperationId = "SaveUserChef",
+            Tags = new[] { "Users Chefs" }
+        )]
+        [SwaggerResponse(200, "User chef was saved", typeof(UserChefResource))]
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] SaveUserChefResource resource)
         {
@@ -70,9 +98,15 @@ namespace Homemade.Controllers
             if (!result.Succes)
                 return BadRequest(result.Message);
             var userChefResource = _mapper.Map<UserChef, UserChefResource>(result.Resource);
-            return Ok(userChefResource );
+            return Ok(userChefResource);
         }
-
+        [SwaggerOperation(
+            Summary = "Update a User Chef",
+            Description = "Update a User Chef",
+            OperationId = "UpdateUserChef",
+            Tags = new[] { "Users Chefs" }
+        )]
+        [SwaggerResponse(200, "User chef was updated", typeof(UserChefResource))]
         [HttpPut("id")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveUserChefResource resource)
         {
@@ -83,9 +117,15 @@ namespace Homemade.Controllers
             var userChefResource = _mapper.Map<UserChef, UserChefResource>(result.Resource);
             return Ok(userChefResource);
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id) 
+        [SwaggerOperation(
+            Summary = "Delete a User Chef",
+            Description = "Delete a User Chef",
+            OperationId = "DeleteUserChef",
+            Tags = new[] { "Users Chefs" }
+        )]
+        [SwaggerResponse(200, "User chef was updated", typeof(UserChefResource))]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _userChefService.DeleteAsync(id);
             if (!result.Succes)
@@ -96,3 +136,4 @@ namespace Homemade.Controllers
 
     }
 }
+
