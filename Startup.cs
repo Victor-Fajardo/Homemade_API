@@ -36,11 +36,11 @@ namespace Homemade
                 //options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
             });
 
-            //Ingredients
-            services.AddScoped<IIngredientRepository, IngredientRepository>();
-            services.AddScoped<IIngredientService, IngredientService>();
+            //Unit Of Work
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Repositories
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<IUserChefRepository, UserChefRepository>();
             services.AddScoped<IUserCommonRepository, UserCommonRepository>();
             services.AddScoped<ICommonChefRepository, CommonChefRepository>();
@@ -49,6 +49,7 @@ namespace Homemade
 
 
             // Services
+            services.AddScoped<IIngredientService, IngredientService>();
             services.AddScoped<IUserChefService, UserChefService>();
             services.AddScoped<IUserCommonService, UserCommonService>();
             services.AddScoped<ICommonChefService, CommonChefService>();
