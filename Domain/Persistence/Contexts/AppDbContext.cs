@@ -19,7 +19,9 @@ namespace Homemade.Domain.Persistence.Contexts
 
         public DbSet<User> Users { get; set; }
         public DbSet<Publication> Publications { get; set; }
-        //public DbSet<Comment> Comments { get; set; }
+        
+        public DbSet<Comment> Comments { get; set; }
+
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
@@ -100,7 +102,18 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Publication>().Property(p => p.Likes).IsRequired();
             builder.Entity<Publication>().Property(p => p.File).IsRequired();
             builder.Entity<Publication>().HasOne(p => p.User).WithMany(p => p.Publications).HasForeignKey(p => p.UserId);
-            ///builder.Entity<Publication>().HasMany(pt => pt.Comments).WithOne(p => p.Publication).HasForeignKey(pt => pt.PublicationId);
+
+
+            // Comments Entity
+            builder.Entity<Comment>().ToTable("Comments");
+            builder.Entity<Comment>().HasKey(p => p.Id);
+            builder.Entity<Comment>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Comment>().Property(p => p.Date).IsRequired();
+            builder.Entity<Comment>().Property(p => p.Text).IsRequired().HasMaxLength(200);
+            builder.Entity<Comment>().HasOne(pt => pt.User).WithMany(p => p.Comments).HasForeignKey(pt => pt.UserId);
+            builder.Entity<Comment>().HasOne(pt => pt.Publication).WithMany(p => p.Comments).HasForeignKey(pt => pt.PublicationId);
+
+
 
         }
 
