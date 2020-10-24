@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Homemade.Domain.Repositories
 {
-    interface IPublicationRepository
+    public interface IPublicationRepository
     {
     }
 }

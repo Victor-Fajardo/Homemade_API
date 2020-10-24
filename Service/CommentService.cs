@@ -1,11 +1,90 @@
-﻿using System;
+﻿using Homemade.Domain.Models;
+using Homemade.Domain.Repositories;
+using Homemade.Domain.Services;
+using Homemade.Domain.Services.Communications;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Homemade.Service
 {
-    public class CommentService
+    public class CommentService : ICommentService
     {
+        private readonly ICommentRepository _commentRepository;
+        //private readonly IPublicationRepository _publicationRepository;
+        private readonly IUserChefRepository _userChefRepository;
+        private readonly IUserCommonRepository _userCommonRepository;
+
+        public CommentService(ICommentRepository commentRepository, IUserChefRepository userChefRepository, IUserCommonRepository userCommonRepository)
+        {
+            _commentRepository = commentRepository;
+            //_publicationRepository = publicationRepository;
+            _userChefRepository = userChefRepository;
+            _userCommonRepository = userCommonRepository;
+        }
+
+        public async Task<CommentResponse> Delete(int id)
+        {
+            var existingComment = await _commentRepository.FindById(id);
+            if (existingComment == null)
+                return new CommentResponse("Coment not found");
+
+            try
+            {
+                _commentRepository.Remove(existingComment);
+                return new CommentResponse(existingComment);
+            }
+            catch (Exception ex)
+            {
+                return new CommentResponse($"An error ocurred while deleting comment: {ex.Message}");
+            }
+        }
+
+        public async Task<IEnumerable<Comment>> ListByPublicationIdAsync(int PublicationId)
+        {
+            return await _commentRepository.ListByPublicationIdAsync(PublicationId);
+        }
+
+        public async Task<IEnumerable<Comment>> ListByUserIdAsync(int userId)
+        {
+            return await _commentRepository.ListByUserIdAsync(userId);
+        }
+
+        public async Task<CommentResponse> SaveAsync(Comment comment)
+        {
+            //var existingPublication = await _publicationRepository.FindById(comment.PublicationId);
+            //if (existingPublication == null)
+            //return new CommentResponse("Publication not found");
+            try
+            {
+                await _commentRepository.AddAsync(comment);
+                return new CommentResponse(comment);
+            }
+            catch (Exception ex)
+            {
+                return new CommentResponse(
+                    $"An error ocurred while saving the comment: {ex.Message}");
+            }
+        }
+
+        public async Task<CommentResponse> UpdateAsync(int id, Comment comment)
+        {
+            var existingComment = await _commentRepository.FindById(id);
+            if (existingComment == null)
+                return new CommentResponse("Coment not found");
+            
+            existingComment.Text = comment.Text;
+            try 
+            {
+                _commentRepository.Update(existingComment);
+                return new CommentResponse(existingComment);
+            }
+            catch (Exception ex)
+            {
+                return new CommentResponse($"An error ocurred while updating comment: {ex.Message}");
+            }
+        }
     }
 }

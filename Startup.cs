@@ -44,6 +44,7 @@ namespace Homemade
             services.AddScoped<IUserChefRepository, UserChefRepository>();
             services.AddScoped<IUserCommonRepository, UserCommonRepository>();
             services.AddScoped<ICommonChefRepository, CommonChefRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -53,6 +54,7 @@ namespace Homemade
             services.AddScoped<IUserChefService, UserChefService>();
             services.AddScoped<IUserCommonService, UserCommonService>();
             services.AddScoped<ICommonChefService, CommonChefService>();
+            services.AddScoped<ICommentService, CommentService>();
 
             services.AddAutoMapper(typeof(Startup));
 

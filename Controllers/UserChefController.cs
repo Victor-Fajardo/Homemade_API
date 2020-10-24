@@ -123,8 +123,8 @@ namespace Homemade.Controllers
             OperationId = "DeleteUserChef",
             Tags = new[] { "Users Chefs" }
         )]
-        [SwaggerResponse(200, "User chef was updated", typeof(UserChefResource))]
-        [HttpGet("{id}")]
+        [SwaggerResponse(200, "User chef was delete", typeof(UserChefResource))]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _userChefService.DeleteAsync(id);

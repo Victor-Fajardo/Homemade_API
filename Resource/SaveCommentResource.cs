@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Homemade.Resource
 {
-    public class CommentResource
+    public class SaveCommentResource
     {
-        public int Id { get; set; }
+        [Required]
+        [MaxLength(200)]
         public string Text { get; set; }
-        public int Likes { get; set; }
+        
+        [Required]
         public DateTime Date { get; set; }
+        
+        [Required]
         public int UserId { get; set; }
+        
+        [Required]
         public int PublicationId { get; set; }
+
     }
 }
