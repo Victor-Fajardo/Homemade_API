@@ -2,46 +2,91 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Homemade.Domain.Models;
+using Homemade.Domain.Services;
+using Homemade.Extensions;
+using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Homemade.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     public class PublicationController : ControllerBase
     {
-        // GET: api/<PublicationController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IPublicationService _publicationService;
+        private readonly IMapper _mapper;
+
+        public PublicationController(IPublicationService publicationService, IMapper mapper)
         {
-            return new string[] { "value1", "value2" };
+            _publicationService = publicationService;
+            _mapper = mapper;
         }
 
-        // GET api/<PublicationController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<PublicationController>
+        [SwaggerOperation(
+            Summary = "Create a Publication",
+            Description = "Create a Publication",
+            OperationId = "CreatePublication",
+            Tags = new[] { "Publications" }
+        )]
+        [SwaggerResponse(200, "Publication was created", typeof(PublicationResource))]
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> PostAsync([FromBody] SavePublicationResource resource)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var publication = _mapper.Map<SavePublicationResource, Publication>(resource);
+
+            var result = await _publicationService.SaveAsync(publication);
+
+            if (!result.Succes)
+                return BadRequest(result.Message);
+
+            var publicationResource = _mapper.Map<Publication, PublicationResource>(result.Resource);
+
+            return Ok(publicationResource);
         }
 
-        // PUT api/<PublicationController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [SwaggerOperation(
+            Summary = "Update a Publication",
+            Description = "Update a Publication",
+            OperationId = "UpdatePublication",
+            Tags = new[] { "Publication" }
+        )]
+        [SwaggerResponse(200, "Publication was updated", typeof(PublicationResource))]
+        [HttpPut("id")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SavePublicationResource resource)
         {
+            var publication = _mapper.Map<SavePublicationResource, Publication>(resource);
+            var result = await _publicationService.UpdateAsync(id, publication);
+
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var publicationResource = _mapper.Map<Publication, PublicationResource>(result.Resource);
+            return Ok(publicationResource);
         }
 
-        // DELETE api/<PublicationController>/5
+        [SwaggerOperation(
+            Summary = "Delete a Publication",
+            Description = "Delete a Publication",
+            OperationId = "DeletePublication",
+            Tags = new[] { "Publications" }
+        )]
+        [SwaggerResponse(200, "Publication was delete", typeof(PublicationResource))]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
+            var result = await _publicationService.Delete(id);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var publicationResource = _mapper.Map<Publication, PublicationResource>(result.Resource);
+            return Ok(publicationResource);
         }
     }
 }
