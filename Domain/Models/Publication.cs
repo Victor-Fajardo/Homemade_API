@@ -15,5 +15,7 @@ namespace Homemade.Domain.Models
         public List<Comment> Comments { get; set; }
         public int Likes {get; set;}
         public Byte[] File{get; set;}
+
+        //prueba 1
     }
 }
