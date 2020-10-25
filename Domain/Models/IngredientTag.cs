@@ -12,7 +12,7 @@ namespace Homemade.Domain.Models
         public Ingredient Ingredient { get; set; }
 
         public int TagId { get; set; }
-        public TagMode Tag { get; set; }
+        //public Tag Tag { get; set; } (Falta implementacion de la clase Tag)
         
     }
 }
