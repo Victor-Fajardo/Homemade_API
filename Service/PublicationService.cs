@@ -44,8 +44,10 @@ namespace Homemade.Service
             return await _publicationRepository.ListByUserIdAsync(userId);
         }
 
-        public async Task<PublicationResponse> SaveAsync(Publication publication)
+        public async Task<PublicationResponse> SaveAsync(Publication publication, int userId)
         {
+            publication.UserId = userId;
+
             try
             {
                 await _publicationRepository.AddAsync(publication);
