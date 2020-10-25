@@ -35,15 +35,15 @@ namespace Homemade.Controllers
             Tags = new[] { "Publications" }
         )]
         [SwaggerResponse(200, "Publication was created", typeof(PublicationResource))]
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SavePublicationResource resource)
+        [HttpPost("userId")]
+        public async Task<IActionResult> PostAsync([FromBody] SavePublicationResource resource, int userId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var publication = _mapper.Map<SavePublicationResource, Publication>(resource);
 
-            var result = await _publicationService.SaveAsync(publication);
+            var result = await _publicationService.SaveAsync(publication, userId);
 
             if (!result.Succes)
                 return BadRequest(result.Message);
@@ -57,7 +57,7 @@ namespace Homemade.Controllers
             Summary = "Update a Publication",
             Description = "Update a Publication",
             OperationId = "UpdatePublication",
-            Tags = new[] { "Publication" }
+            Tags = new[] { "Publications" }
         )]
         [SwaggerResponse(200, "Publication was updated", typeof(PublicationResource))]
         [HttpPut("id")]
