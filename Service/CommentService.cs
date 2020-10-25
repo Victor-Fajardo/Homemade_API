@@ -52,8 +52,10 @@ namespace Homemade.Service
             return await _commentRepository.ListByUserIdAsync(userId);
         }
 
-        public async Task<CommentResponse> SaveAsync(Comment comment)
+        public async Task<CommentResponse> SaveAsync(Comment comment, int publicationId, int userId )
         {
+            comment.PublicationId = publicationId;
+            comment.UserId = userId;
             //var existingPublication = await _publicationRepository.FindById(comment.PublicationId);
             //if (existingPublication == null)
             //return new CommentResponse("Publication not found");

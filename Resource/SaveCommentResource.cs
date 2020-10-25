@@ -14,12 +14,6 @@ namespace Homemade.Resource
         
         [Required]
         public DateTime Date { get; set; }
-        
-        [Required]
-        public int UserId { get; set; }
-        
-        [Required]
-        public int PublicationId { get; set; }
 
     }
 }

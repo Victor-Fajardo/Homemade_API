@@ -11,7 +11,7 @@ namespace Homemade.Domain.Services
     {
         Task<IEnumerable<Comment>> ListByUserIdAsync(int userId);
         Task<IEnumerable<Comment>> ListByPublicationIdAsync(int PublicationId);
-        Task<CommentResponse> SaveAsync(Comment comment);
+        Task<CommentResponse> SaveAsync(Comment comment, int publicationId, int userId);
         Task<CommentResponse> UpdateAsync(int id ,Comment comment);
         Task<CommentResponse> Delete(int id);
 

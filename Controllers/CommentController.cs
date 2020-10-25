@@ -35,15 +35,15 @@ namespace Homemade.Controllers
             Tags = new[] { "Comments" }
         )]
         [SwaggerResponse(200, "Comment was created", typeof(CommentResource))]
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveCommentResource resource)
+        [HttpPost("publicationId/userId")]
+        public async Task<IActionResult> PostAsync([FromBody] SaveCommentResource resource, int publicationId, int userId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var comment = _mapper.Map<SaveCommentResource, Comment>(resource);
 
-            var result = await _commentService.SaveAsync(comment);
+            var result = await _commentService.SaveAsync(comment, publicationId, userId);
 
             if (!result.Succes)
                 return BadRequest(result.Message);
