@@ -100,7 +100,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Publication>().Property(p => p.Publicationdate).IsRequired();
             builder.Entity<Publication>().Property(p => p.Text).IsRequired().HasMaxLength(200);
             builder.Entity<Publication>().Property(p => p.Likes).IsRequired();
-            builder.Entity<Publication>().Property(p => p.File).IsRequired();
+            builder.Entity<Publication>().Property(p => p.File);
             builder.Entity<Publication>().HasOne(p => p.User).WithMany(p => p.Publications).HasForeignKey(p => p.UserId);
 
 

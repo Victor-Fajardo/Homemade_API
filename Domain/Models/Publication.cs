@@ -16,6 +16,5 @@ namespace Homemade.Domain.Models
         public int Likes {get; set;}
         public Byte[] File{get; set;}
 
-        //prueba 1
     }
 }
