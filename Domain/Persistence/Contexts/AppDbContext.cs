@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Threading.Tasks;
 
 namespace Homemade.Domain.Persistence.Contexts
@@ -21,13 +22,14 @@ namespace Homemade.Domain.Persistence.Contexts
         public DbSet<Publication> Publications { get; set; }
         
         public DbSet<Comment> Comments { get; set; }
-
+        public DbSet<IngredientTag> IngredientTags { get; set; }
+        //public DbSet<Tag> Tags { get; set; }(Falta clase tag)
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder) 
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
@@ -39,7 +41,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Ingredient>().Property(p => p.UnitOfMeasurement).IsRequired();
             builder.Entity<Ingredient>().HasData
                 (
-                new Ingredient { Id = 100, Name = "Sal de Mesa", UnitOfMeasurement = EUnitOfMeasurement.Gram}
+                new Ingredient { Id = 100, Name = "Sal de Mesa", UnitOfMeasurement = EUnitOfMeasurement.Gram }
                 );
 
             //User Entity
@@ -113,6 +115,21 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Comment>().HasOne(pt => pt.User).WithMany(p => p.Comments).HasForeignKey(pt => pt.UserId);
             builder.Entity<Comment>().HasOne(pt => pt.Publication).WithMany(p => p.Comments).HasForeignKey(pt => pt.PublicationId);
 
+
+            /*//Tag Entity
+            builder.Entity<Tag>().ToTable("Tags");
+            builder.Entity<Tag>().HasKey(p => p.Id);
+            builder.Entity<Tag>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Tag>().Property(p => p.Name).IsRequired().HasMaxLength(30);
+
+            //Ingredient Entity
+            builder.Entity<IngredientTag>().ToTable("IngredientTag");
+            builder.Entity<IngredientTag>().HasKey(pt => new { pt.IngredientId, pt.TagId });
+
+            builder.Entity<IngredientTag>()
+                .HasOne(pt => pt.Ingredient)
+                .WithMany(p => p.IngredientTags)
+                .HasForeignKey(pt => pt.IngredientId);*/
 
 
         }
