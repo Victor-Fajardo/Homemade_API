@@ -7,5 +7,6 @@ namespace Homemade.Domain.Models
 {
     public class Chat
     {
+
     }
 }

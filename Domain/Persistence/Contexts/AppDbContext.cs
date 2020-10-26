@@ -22,8 +22,7 @@ namespace Homemade.Domain.Persistence.Contexts
         public DbSet<Publication> Publications { get; set; }
         
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<IngredientTag> IngredientTags { get; set; }
-        //public DbSet<Tag> Tags { get; set; }(Falta clase tag)
+        
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
@@ -114,22 +113,6 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Comment>().Property(p => p.Text).IsRequired().HasMaxLength(200);
             builder.Entity<Comment>().HasOne(pt => pt.User).WithMany(p => p.Comments).HasForeignKey(pt => pt.UserId);
             builder.Entity<Comment>().HasOne(pt => pt.Publication).WithMany(p => p.Comments).HasForeignKey(pt => pt.PublicationId);
-
-
-            /*//Tag Entity
-            builder.Entity<Tag>().ToTable("Tags");
-            builder.Entity<Tag>().HasKey(p => p.Id);
-            builder.Entity<Tag>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Tag>().Property(p => p.Name).IsRequired().HasMaxLength(30);
-
-            //Ingredient Entity
-            builder.Entity<IngredientTag>().ToTable("IngredientTag");
-            builder.Entity<IngredientTag>().HasKey(pt => new { pt.IngredientId, pt.TagId });
-
-            builder.Entity<IngredientTag>()
-                .HasOne(pt => pt.Ingredient)
-                .WithMany(p => p.IngredientTags)
-                .HasForeignKey(pt => pt.IngredientId);*/
 
 
         }
