@@ -84,7 +84,7 @@ namespace Homemade.Service
             }
             catch(Exception ex)
             {
-                return new PaymentResponse($"An error ocurred while updating category: {ex.Message}");
+                return new PaymentResponse($"An error ocurred while updating Payment: {ex.Message}");
             }
         }
     }
