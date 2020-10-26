@@ -85,8 +85,8 @@ namespace Homemade.Controllers
             var result = await _commentService.Delete(id);
             if (!result.Succes)
                 return BadRequest(result.Message);
-            var userChefResource = _mapper.Map<Comment, CommentResource>(result.Resource);
-            return Ok(userChefResource);
+            var commentResource = _mapper.Map<Comment, CommentResource>(result.Resource);
+            return Ok(commentResource);
         }
     }
 }

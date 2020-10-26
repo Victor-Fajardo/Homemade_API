@@ -13,14 +13,14 @@ namespace Homemade.Service
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
-        //private readonly IPublicationRepository _publicationRepository;
+        private readonly IPublicationRepository _publicationRepository;
         private readonly IUserChefRepository _userChefRepository;
         private readonly IUserCommonRepository _userCommonRepository;
 
-        public CommentService(ICommentRepository commentRepository, IUserChefRepository userChefRepository, IUserCommonRepository userCommonRepository)
+        public CommentService(ICommentRepository commentRepository, IPublicationRepository publicationRepository, IUserChefRepository userChefRepository, IUserCommonRepository userCommonRepository)
         {
             _commentRepository = commentRepository;
-            //_publicationRepository = publicationRepository;
+            _publicationRepository = publicationRepository;
             _userChefRepository = userChefRepository;
             _userCommonRepository = userCommonRepository;
         }
@@ -54,11 +54,16 @@ namespace Homemade.Service
 
         public async Task<CommentResponse> SaveAsync(Comment comment, int publicationId, int userId )
         {
-            comment.PublicationId = publicationId;
-            comment.UserId = userId;
-            //var existingPublication = await _publicationRepository.FindById(comment.PublicationId);
-            //if (existingPublication == null)
-            //return new CommentResponse("Publication not found");
+            var existingPublication = await _publicationRepository.FindById(publicationId);
+            if (existingPublication == null)
+                return new CommentResponse("Publication not found");
+            var existingUser = await _userCommonRepository.FindById(userId);
+            if(existingUser == null) {
+                return new CommentResponse("User not found");
+            }
+
+            comment.Publication = existingPublication;
+            comment.User = existingUser;
             try
             {
                 await _commentRepository.AddAsync(comment);

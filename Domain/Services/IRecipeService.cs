@@ -11,7 +11,7 @@ namespace Homemade.Domain.Services
     {
         Task<IEnumerable<Recipe>> ListAsync();
         Task<RecipeResponse> GetByIdAsync(int id);
-        Task<RecipeResponse> SaveAsync(Recipe recipe);
+        Task<RecipeResponse> SaveAsync(Recipe recipe, int userChefId);
         Task<RecipeResponse> UpdateAsync(int id, Recipe recipe);
         Task<RecipeResponse> DeleteAsync(int id);
     }

@@ -2,46 +2,73 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Homemade.Domain.Models;
+using Homemade.Domain.Services;
+using Homemade.Domain.Services.Communications;
+using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Homemade.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
+    [Route("/api/[controller]")]
     public class PaymentController : ControllerBase
     {
-        // GET: api/<PaymentController>
+        private readonly IPaymentService _paymentService;
+        private readonly IMapper _mapper;
+
+        public  PaymentController(IPaymentService paymentService, IMapper mapper)
+        {
+            _paymentService = paymentService;
+            _mapper = mapper;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<PaymentResource>> GetAllAsync()
         {
-            return new string[] { "value1", "value2" };
+            var payments = await _paymentService.ListAsync();
+            var resources =  _mapper.Map<IEnumerable<Payment>, IEnumerable<PaymentResource>>(payments);
+            return resources;
+        }
+        [HttpPost("userCommonId")]
+        public async Task<IActionResult> PostAsync([FromBody] SavePaymentResource resource, int userCommonId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid Input");
+
+            var payment = _mapper.Map<SavePaymentResource, Payment>(resource);
+
+            var result = await _paymentService.SaveAsync(payment, userCommonId);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var paymentResource = _mapper.Map<Payment, PaymentResource>(result.Resource);
+            return Ok(paymentResource);
         }
 
-        // GET api/<PaymentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<PaymentController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<PaymentController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SavePaymentResource resource)
         {
+            var payment = _mapper.Map<SavePaymentResource, Payment>(resource);
+            var result = await _paymentService.UpdateAsync(id, payment);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var paymentResource = _mapper.Map<Payment, PaymentResource>(result.Resource);
+            return Ok(paymentResource);
         }
 
-        // DELETE api/<PaymentController>/5
+        // DELETE api/<IngredientController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
+            var result = await _paymentService.DeleteAsync(id);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var paymentResource = _mapper.Map<Payment, PaymentResource>(result.Resource);
+            return Ok(paymentResource);
         }
     }
 }

@@ -13,9 +13,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Homemade.Controllers
 {
-    [Route("api/[controller]")]
-    [Produces("application/json")]
     [ApiController]
+    [Produces("application/json")]
+    [Route("/api/[controller]")]
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
@@ -27,6 +27,7 @@ namespace Homemade.Controllers
             _mapper = mapper;
         }
 
+
         // GET: api/<RecipeController>
         [HttpGet]
         public async Task<IEnumerable<RecipeResource>> GetAllAsync()
@@ -37,23 +38,16 @@ namespace Homemade.Controllers
             return resource;
         }
 
-        // GET api/<RecipeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<RecipeController>
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveRecipeResource resource)
+        [HttpPost("userChefId")]
+        public async Task<IActionResult> PostAsync([FromBody] SaveRecipeResource resource, int userChefId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var recipe = _mapper.Map<SaveRecipeResource, Recipe>(resource);
 
-            var result = await _recipeService.SaveAsync(recipe);
+            var result = await _recipeService.SaveAsync(recipe, userChefId);
 
             if (!result.Succes)
                 return BadRequest(result.Message);

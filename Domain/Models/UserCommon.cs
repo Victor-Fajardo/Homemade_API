@@ -11,10 +11,11 @@ namespace Homemade.Domain.Models
         public bool Membership { get; set; }
 
         //public List<Menu> Menus;
+        public int PaymentId { get; set; }
 
-        //public List<Payment> Payments;
+        public List<Payment> Payments { get; set; }
 
-        public List<CommonChef> CommonChefs;
+        public List<CommonChef> CommonChefs { get; set; }
 
     }
 }

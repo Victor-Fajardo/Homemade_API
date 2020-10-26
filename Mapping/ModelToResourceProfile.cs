@@ -16,7 +16,11 @@ namespace Homemade.Mapping
             CreateMap<UserChef, UserChefResource>();
             CreateMap<UserCommon, UserCommonResource>();
             CreateMap<Comment, CommentResource>();
+            CreateMap<Publication, PublicationResource>();
             CreateMap<Recipe, RecipeResource>();
+            CreateMap<Payment, PaymentResource>();
+            CreateMap<RecipeStep, RecipeStepsResource>();
+
         }
     }
 }
