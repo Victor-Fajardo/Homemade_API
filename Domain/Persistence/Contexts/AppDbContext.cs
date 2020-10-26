@@ -39,10 +39,8 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Ingredient>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Ingredient>().Property(p => p.Name).IsRequired().HasMaxLength(40);
             builder.Entity<Ingredient>().Property(p => p.UnitOfMeasurement).IsRequired();
-            builder.Entity<Ingredient>().HasData
-                (
-                new Ingredient { Id = 100, Name = "Sal de Mesa", UnitOfMeasurement = EUnitOfMeasurement.Gram }
-                );
+            builder.Entity<Ingredient>().HasOne(pt => pt.Recipe).WithMany(p => p.Ingredients).HasForeignKey(pt => pt.RecipeId);
+
 
             //User Entity
             builder.Entity<User>().ToTable("Users")

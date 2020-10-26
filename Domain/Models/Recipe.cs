@@ -14,9 +14,7 @@ namespace Homemade.Domain.Models
         public DateTime Date { get; set; }
         public int AuthorId { get; set; }
         public UserChef Author { get; set; }
-
-
-        //public List<Ingredient> Ingredients { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
         //public List<Comment> Comments { get; set; }
 
     }
