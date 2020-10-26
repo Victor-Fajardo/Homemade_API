@@ -18,6 +18,7 @@ namespace Homemade.Mapping
             CreateMap<SavePublicationResource, PublicationResource>();
             CreateMap<SaveCommentResource, CommentResource>();
             CreateMap<SaveRecipeResource, RecipeResource>();
+            CreateMap<SavePaymentResource, Payment>();
         }
     }
 }

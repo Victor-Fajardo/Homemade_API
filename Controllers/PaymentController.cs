@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Homemade.Domain.Models;
 using Homemade.Domain.Services;
+using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,10 +27,17 @@ namespace Homemade.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Payment>> GetPaymentsAsync()
+        public async Task<IEnumerable<PaymentResource>> GetAllAsync()
         {
             var payments = await _paymentService.ListAsync();
-            return payments;
+            var resources =  _mapper.Map<IEnumerable<Payment>, IEnumerable<PaymentResource>>(payments);
+            return resources;
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostAsync([FromBody] SavePaymentResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid Input");
         }
 
 
