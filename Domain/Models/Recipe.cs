@@ -12,9 +12,11 @@ namespace Homemade.Domain.Models
         public string Instructions { get; set; }
         public int Qualification { get; set; }
         public DateTime Date { get; set; }
+        public int AuthorId { get; set; }
+        public UserChef Author { get; set; }
+
 
         //public List<Ingredient> Ingredients { get; set; }
-        //public UserChef Author { get; set; }
         //public List<Comment> Comments { get; set; }
 
     }

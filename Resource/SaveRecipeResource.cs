@@ -14,8 +14,6 @@ namespace Homemade.Resource
         [Required]
         public string Instructions { get; set; }
         [Required]
-        public int Qualification { get; set; }
-        [Required]
         public DateTime Date { get; set; }
     }
 }

@@ -120,8 +120,8 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Recipe>().HasKey(p => p.Id);
             builder.Entity<Recipe>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Recipe>().Property(p => p.NameRecipe).IsRequired().HasMaxLength(50);
-            builder.Entity<Recipe>().Property(p => p.Qualification).IsRequired();
             builder.Entity<Recipe>().Property(p => p.Date).IsRequired();
+            builder.Entity<Recipe>().HasOne(pt => pt.Author).WithMany(p => p.Recipes).HasForeignKey(pt => pt.AuthorId);
 
             //Payment Entity
             builder.Entity<Payment>().ToTable("Payment");
