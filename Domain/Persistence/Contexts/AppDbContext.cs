@@ -132,7 +132,6 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Payment>().Property(p => p.Date).IsRequired();
             builder.Entity<Payment>().Property(p => p.Total).IsRequired();
 
-
         }
 
     }
