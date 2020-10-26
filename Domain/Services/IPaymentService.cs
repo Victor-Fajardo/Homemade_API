@@ -11,7 +11,7 @@ namespace Homemade.Domain.Services
     {
         Task<IEnumerable<Payment>> ListAsync();
         Task<PaymentResponse> GetByIdAsync(int id);
-        Task<PaymentResponse> SaveAsync(Payment ingredient);
+        Task<PaymentResponse> SaveAsync(Payment payment);
         Task<PaymentResponse> UpdateAsync(int id, Payment payment);
         Task<PaymentResponse> DeleteAsync(int id);
     }
