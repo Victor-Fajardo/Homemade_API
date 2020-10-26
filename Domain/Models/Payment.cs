@@ -15,7 +15,7 @@ namespace Homemade.Domain.Models
         public DateTime Date { get; set; }
         public float Total { get; set; }
         public int UserCommonId { get; set; }
-        public UserCommon UserCommon { get; set; }
+        public UserCommon UserCommons { get; set; }
 
 
     }

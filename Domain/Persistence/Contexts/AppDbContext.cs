@@ -131,7 +131,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Payment>().Property(p => p.CardName).IsRequired().HasMaxLength(50);
             builder.Entity<Payment>().Property(p => p.Date).IsRequired();
             builder.Entity<Payment>().Property(p => p.Total).IsRequired();
-
+            builder.Entity<Payment>().HasOne(p => p.UserCommons).WithMany(p => p.Payments).HasForeignKey(p => p.UserCommonId);
         }
 
     }
