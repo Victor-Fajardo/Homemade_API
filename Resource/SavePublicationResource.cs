@@ -15,12 +15,5 @@ namespace Homemade.Resource
         [Required]
         public DateTime Publicationdate { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
-
-        [Required]
-        public int Likes { get; set; }
-
-        public Byte[] File { get; set; }
     }
 }

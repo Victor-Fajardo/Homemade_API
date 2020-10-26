@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Threading.Tasks;
 
 namespace Homemade.Domain.Persistence.Contexts
@@ -23,12 +24,11 @@ namespace Homemade.Domain.Persistence.Contexts
         
         public DbSet<Comment> Comments { get; set; }
 
-
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder) 
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
@@ -40,7 +40,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Ingredient>().Property(p => p.UnitOfMeasurement).IsRequired();
             builder.Entity<Ingredient>().HasData
                 (
-                new Ingredient { Id = 100, Name = "Sal de Mesa", UnitOfMeasurement = EUnitOfMeasurement.Gram}
+                new Ingredient { Id = 100, Name = "Sal de Mesa", UnitOfMeasurement = EUnitOfMeasurement.Gram }
                 );
 
             //User Entity
@@ -100,7 +100,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Publication>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Publication>().Property(p => p.Publicationdate).IsRequired();
             builder.Entity<Publication>().Property(p => p.Text).IsRequired().HasMaxLength(200);
-            builder.Entity<Publication>().Property(p => p.Likes).IsRequired();
+            builder.Entity<Publication>().Property(p => p.Likes);
             builder.Entity<Publication>().Property(p => p.File);
             builder.Entity<Publication>().HasOne(p => p.User).WithMany(p => p.Publications).HasForeignKey(p => p.UserId);
 
@@ -121,6 +121,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Recipe>().Property(p => p.NameRecipe).IsRequired().HasMaxLength(50);
             builder.Entity<Recipe>().Property(p => p.Qualification).IsRequired();
             builder.Entity<Recipe>().Property(p => p.Date).IsRequired();
+
 
 
         }

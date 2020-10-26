@@ -10,7 +10,7 @@ namespace Homemade.Domain.Services
     public interface IPublicationService
     {
         Task<IEnumerable<Publication>> ListByUserIdAsync(int userId);
-        Task<PublicationResponse> SaveAsync(Publication publication);
+        Task<PublicationResponse> SaveAsync(Publication publication, int userId);
         Task<PublicationResponse> UpdateAsync(int id,Publication publication);
         Task<PublicationResponse> Delete(int id);
     }

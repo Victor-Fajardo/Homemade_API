@@ -11,7 +11,6 @@ namespace Homemade.Resource
         public string Text { get; set; }
         public int Likes { get; set; }
         public DateTime Date { get; set; }
-        public int UserId { get; set; }
-        public int PublicationId { get; set; }
+        public PublicationResource Publication { get; set; }
     }
 }
