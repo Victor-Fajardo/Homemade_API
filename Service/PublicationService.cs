@@ -46,7 +46,13 @@ namespace Homemade.Service
 
         public async Task<PublicationResponse> SaveAsync(Publication publication, int userId)
         {
-            publication.UserId = userId;
+            var existingUser = await _userCommonRepository.FindById(userId);
+            if (existingUser == null)
+            {
+                return new PublicationResponse("User not found");
+            }
+
+            publication.User = existingUser;
 
             try
             {
