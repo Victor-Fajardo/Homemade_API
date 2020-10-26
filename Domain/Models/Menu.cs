@@ -7,6 +7,5 @@ namespace Homemade.Domain.Models
 {
     public class Menu
     {
-
     }
 }
