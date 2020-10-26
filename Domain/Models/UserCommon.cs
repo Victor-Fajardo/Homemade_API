@@ -12,7 +12,7 @@ namespace Homemade.Domain.Models
 
         //public List<Menu> Menus;
 
-        //public List<Payment> Payments;
+        public List<Payment> Payments;
 
         public List<CommonChef> CommonChefs;
 

@@ -2,16 +2,54 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Homemade.Domain.Models;
+using Homemade.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Homemade.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
+    [Route("/api/[controller]")]
     public class PaymentController : ControllerBase
     {
+        private readonly IPaymentService _paymentService;
+        private readonly IMapper _mapper;
+
+        public  PaymentController(IPaymentService paymentService, IMapper mapper)
+        {
+            _paymentService = paymentService;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<Payment>> GetPaymentsAsync()
+        {
+            var payments = await _paymentService.ListAsync();
+            return payments;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // GET: api/<PaymentController>
         [HttpGet]
         public IEnumerable<string> Get()

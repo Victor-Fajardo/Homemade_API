@@ -23,6 +23,7 @@ namespace Homemade.Domain.Persistence.Contexts
         public DbSet<Publication> Publications { get; set; }
         
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
@@ -121,6 +122,15 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Recipe>().Property(p => p.NameRecipe).IsRequired().HasMaxLength(50);
             builder.Entity<Recipe>().Property(p => p.Qualification).IsRequired();
             builder.Entity<Recipe>().Property(p => p.Date).IsRequired();
+
+            //Payment Entity
+            builder.Entity<Payment>().ToTable("Payment");
+            builder.Entity<Payment>().HasKey(p => p.Id);
+            builder.Entity<Payment>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Payment>().Property(p => p.CardNumber).IsRequired();
+            builder.Entity<Payment>().Property(p => p.CardName).IsRequired().HasMaxLength(50);
+            builder.Entity<Payment>().Property(p => p.Date).IsRequired();
+            builder.Entity<Payment>().Property(p => p.Total).IsRequired();
 
 
 
