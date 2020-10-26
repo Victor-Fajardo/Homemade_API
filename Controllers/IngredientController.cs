@@ -13,15 +13,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Homemade.Controllers
 {
-    [Route("api/[controller]")]
-    [Produces("application/json")]
     [ApiController]
-    public class RecipeController : ControllerBase
+    [Produces("application/json")]
+    [Route("/api/[controller]")]
+    public class IngredientController : ControllerBase
     {
         private readonly IIngredientService _ingredientService;
         private readonly IMapper _mapper;
 
-        public RecipeController(IIngredientService ingredientService, IMapper mapper)
+        public IngredientController(IIngredientService ingredientService, IMapper mapper)
         {
             _ingredientService = ingredientService;
             _mapper = mapper;
@@ -45,15 +45,15 @@ namespace Homemade.Controllers
         }
 
         // POST api/<IngredientController>
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveIngredientResource resource)
+        [HttpPost("{recipeId}")]
+        public async Task<IActionResult> PostAsync([FromBody] SaveIngredientResource resource, int recipeId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var ingredient = _mapper.Map<SaveIngredientResource, Ingredient>(resource);
 
-            var result = await _ingredientService.SaveAsync(ingredient);
+            var result = await _ingredientService.SaveAsync(ingredient, recipeId);
 
             if (!result.Succes)
                 return BadRequest(result.Message);

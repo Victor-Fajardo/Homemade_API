@@ -13,5 +13,6 @@ namespace Homemade.Resource
         public string Text { get; set; }
         public int Likes { get; set; }
         public Byte[] File { get; set; }
+        public UserCommonResource User { get; set; }
     }
 }

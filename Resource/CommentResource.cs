@@ -12,5 +12,6 @@ namespace Homemade.Resource
         public int Likes { get; set; }
         public DateTime Date { get; set; }
         public PublicationResource Publication { get; set; }
+        public UserCommonResource User { get; set; }
     }
 }

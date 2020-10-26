@@ -7,5 +7,9 @@ namespace Homemade.Resource
 {
     public class RecipeStepsResource
     {
+        public int Id { get; set; }
+        public string Instructions { get; set; }
+        public Byte[] Picture { get; set; }
+        public RecipeResource Recipe { get; set; }
     }
 }
