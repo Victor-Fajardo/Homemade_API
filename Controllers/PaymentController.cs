@@ -34,10 +34,12 @@ namespace Homemade.Controllers
             return resources;
         }
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SavePaymentResource)
+        public async Task<IActionResult> PostAsync([FromBody] SavePaymentResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid Input");
+
+            var payment = _mapper.Map<SavePaymentResource, Payment>(resource);
         }
 
 
