@@ -47,6 +47,7 @@ namespace Homemade
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IPublicationRepository, PublicationRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -59,6 +60,7 @@ namespace Homemade
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IPublicationService, PublicationService>();
             services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
             services.AddAutoMapper(typeof(Startup));
 
