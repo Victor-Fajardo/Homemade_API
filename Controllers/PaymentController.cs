@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Homemade.Domain.Models;
 using Homemade.Domain.Services;
+using Homemade.Domain.Services.Communications;
 using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,56 +41,34 @@ namespace Homemade.Controllers
                 return BadRequest("Invalid Input");
 
             var payment = _mapper.Map<SavePaymentResource, Payment>(resource);
+
+            var result = await _paymentService.SaveAsync(payment);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var paymentResource = _mapper.Map<Payment, PaymentResource>(result.Resource);
+            return Ok(paymentResource);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: api/<PaymentController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<PaymentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<PaymentController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<PaymentController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SavePaymentResource resource)
         {
+            var payment = _mapper.Map<SavePaymentResource, Payment>(resource);
+            var result = await _paymentService.UpdateAsync(id, payment);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var paymentResource = _mapper.Map<Payment, PaymentResource>(result.Resource);
+            return Ok(paymentResource);
         }
 
-        // DELETE api/<PaymentController>/5
+        // DELETE api/<IngredientController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
+            var result = await _paymentService.DeleteAsync(id);
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var paymentResource = _mapper.Map<Payment, PaymentResource>(result.Resource);
+            return Ok(paymentResource);
         }
     }
 }
