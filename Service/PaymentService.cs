@@ -13,12 +13,12 @@ namespace Homemade.Service
     public class PaymentService : IPaymentService
     {
         private readonly IPaymentRepository _paymentRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserCommonRepository _userCommonRepository;
 
-        public PaymentService(IPaymentRepository paymentRepository, IUnitOfWork unitOfWork)
+        public PaymentService(IPaymentRepository paymentRepository, IUserCommonRepository userCommonRepository)
         {
             _paymentRepository = paymentRepository;
-            _unitOfWork = unitOfWork;
+            _userCommonRepository = userCommonRepository;
         }
 
         public async Task<PaymentResponse> DeleteAsync(int id)
@@ -30,7 +30,6 @@ namespace Homemade.Service
             try
             {
                 _paymentRepository.Remove(existingPayment);
-                await _unitOfWork.CompleteAsync();
                 return new PaymentResponse(existingPayment);
             }
             catch (Exception ex)
@@ -53,12 +52,17 @@ namespace Homemade.Service
             return await _paymentRepository.ListAsync();
         }
 
-        public async Task<PaymentResponse> SaveAsync(Payment payment)
+        public async Task<PaymentResponse> SaveAsync(Payment payment, int userCommontId)
         {
+            var existingUser = await _userCommonRepository.FindById(userCommontId);
+            if (existingUser == null)
+            {
+                return new PaymentResponse("User not found");
+            }
+            payment.UserCommon = existingUser;
             try
             {
                 await _paymentRepository.AddAsync(payment);
-                await _unitOfWork.CompleteAsync();
 
                 return new PaymentResponse(payment);
             }
@@ -79,7 +83,6 @@ namespace Homemade.Service
             try
             {
                 _paymentRepository.Update(existingPayment);
-                await _unitOfWork.CompleteAsync();
                 return new PaymentResponse(existingPayment);
             }
             catch(Exception ex)
