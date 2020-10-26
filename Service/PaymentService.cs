@@ -80,7 +80,7 @@ namespace Homemade.Service
             {
                 _paymentRepository.Update(existingPayment);
                 await _unitOfWork.CompleteAsync();
-                return new PaymentResponse(existingPayment)
+                return new PaymentResponse(existingPayment);
             }
             catch(Exception ex)
             {
