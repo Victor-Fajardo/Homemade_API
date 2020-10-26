@@ -46,9 +46,7 @@ namespace Homemade.Controllers
 
             if (!result.Succes)
                 return BadRequest(result.Message);
-
             var recipeStepResource = _mapper.Map<RecipeStep, RecipeStepsResource>(result.Resource);
-
             return Ok(recipeStepResource);
 
         }
