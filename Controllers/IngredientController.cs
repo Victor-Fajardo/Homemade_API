@@ -16,12 +16,12 @@ namespace Homemade.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    public class RecipeController : ControllerBase
+    public class IngredientController : ControllerBase
     {
         private readonly IIngredientService _ingredientService;
         private readonly IMapper _mapper;
 
-        public RecipeController(IIngredientService ingredientService, IMapper mapper)
+        public IngredientController(IIngredientService ingredientService, IMapper mapper)
         {
             _ingredientService = ingredientService;
             _mapper = mapper;
