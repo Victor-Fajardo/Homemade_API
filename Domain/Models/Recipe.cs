@@ -7,5 +7,15 @@ namespace Homemade.Domain.Models
 {
     public class Recipe
     {
+        public int Id { get; set; }
+        public  string NameRecipe { get; set; }
+        public string Instructions { get; set; }
+        public int Qualification { get; set; }
+        public DateTime Date { get; set; }
+
+        //public List<Ingredient> Ingredients { get; set; }
+        //public UserChef Author { get; set; }
+        //public List<Comment> Comments { get; set; }
+
     }
 }

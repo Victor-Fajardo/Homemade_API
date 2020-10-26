@@ -12,7 +12,6 @@ namespace Homemade.Domain.Repositories
         Task AddAsync(Ingredient ingredient);
         Task<Ingredient> FindById(int id);
         void Update(Ingredient ingredient);
-
         void Remove(Ingredient ingredient);
     }
 }

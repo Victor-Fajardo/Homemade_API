@@ -11,6 +11,7 @@ namespace Homemade.Domain.Persistence.Contexts
     public class AppDbContext : DbContext
     {
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
         public DbSet<UserChef> UserChefs { get; set; }
 
         public DbSet<UserCommon> UserCommons { get; set; }
@@ -113,6 +114,13 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Comment>().HasOne(pt => pt.User).WithMany(p => p.Comments).HasForeignKey(pt => pt.UserId);
             builder.Entity<Comment>().HasOne(pt => pt.Publication).WithMany(p => p.Comments).HasForeignKey(pt => pt.PublicationId);
 
+            //Recipe Entity
+            builder.Entity<Recipe>().ToTable("Recipes");
+            builder.Entity<Recipe>().HasKey(p => p.Id);
+            builder.Entity<Recipe>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Recipe>().Property(p => p.NameRecipe).IsRequired().HasMaxLength(50);
+            builder.Entity<Recipe>().Property(p => p.Qualification).IsRequired();
+            builder.Entity<Recipe>().Property(p => p.Date).IsRequired();
 
 
         }
