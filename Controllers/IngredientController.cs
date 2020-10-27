@@ -8,6 +8,7 @@ using Homemade.Domain.Services;
 using Homemade.Extensions;
 using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,6 +29,14 @@ namespace Homemade.Controllers
         }
 
         // GET: api/<IngredientController>
+        [SwaggerOperation(
+             Summary = "List all Ingredients",
+             Description = "List of ingredients",
+             OperationId = "ListAllIngredients",
+             Tags = new[] { "Ingredients" }
+             )]
+        [SwaggerResponse(200, "List of Ingredients", typeof(IEnumerable<IngredientResource>))]
+        [ProducesResponseType(typeof(IEnumerable<IngredientResource>), 200)]
         [HttpGet]
         public async Task<IEnumerable<IngredientResource>> GetAllAsync()
         {
@@ -45,6 +54,13 @@ namespace Homemade.Controllers
         }
 
         // POST api/<IngredientController>
+        [SwaggerOperation(
+            Summary = "Create a Ingredient",
+            Description = "Create a Ingredient",
+            OperationId = "CreateIngredient",
+            Tags = new[] { "Ingredients" }
+        )]
+        [SwaggerResponse(200, "Ingredient was created", typeof(IngredientResource))]
         [HttpPost("{recipeId}")]
         public async Task<IActionResult> PostAsync([FromBody] SaveIngredientResource resource, int recipeId)
         {
@@ -62,6 +78,13 @@ namespace Homemade.Controllers
         }
 
         // PUT api/<IngredientController>/5
+        [SwaggerOperation(
+           Summary = "Update a Ingredient",
+           Description = "Update a Ingredient",
+           OperationId = "UpdateIngredient",
+           Tags = new[] { "Ingredients" }
+       )]
+        [SwaggerResponse(200, "Ingredient was updated", typeof(IngredientResource))]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveIngredientResource resource)
         {
@@ -74,6 +97,13 @@ namespace Homemade.Controllers
         }
 
         // DELETE api/<IngredientController>/5
+        [SwaggerOperation(
+            Summary = "Delete a Ingredient",
+            Description = "Delete a Ingredient",
+            OperationId = "DeleteIngredient",
+            Tags = new[] { "Ingredients" }
+        )]
+        [SwaggerResponse(200, "Ingredient was delete", typeof(IngredientResource))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {

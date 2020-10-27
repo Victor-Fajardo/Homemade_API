@@ -9,6 +9,7 @@ using Homemade.Domain.Services;
 using Homemade.Extensions;
 using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Homemade.Controllers
 {
@@ -30,8 +31,14 @@ namespace Homemade.Controllers
             _mapper = mapper;
         }
 
-        
 
+        [SwaggerOperation(
+            Summary = "List all User Common by User Chef Id",
+            Description = "List of User Common for a User Chef Id",
+            OperationId = "ListAllUserCommonByChefId",
+            Tags = new[] { "Users Common" }
+        )]
+        [SwaggerResponse(200, "List of User Common for a User Chef Id", typeof(IEnumerable<UserCommonResource>))]
         [HttpGet]
         public async Task<IEnumerable<UserChefResource>> GetAllByUsersChefIdAsync(int userchefId)
         {
@@ -41,6 +48,13 @@ namespace Homemade.Controllers
             return resource;
         }
 
+        [SwaggerOperation(
+            Summary = "Assign User Chef",
+            Description = "Assign User Chef",
+            OperationId = "AssignUserChef",
+            Tags = new[] { "Users Common" }
+        )]
+        [SwaggerResponse(200, "User common was created", typeof(UserCommonResource))]
         [HttpPost("{userCommonId}/{userChefId}")]
         public async Task<IActionResult> AssignUserChef(int userCommonId, int userChefId)
         {

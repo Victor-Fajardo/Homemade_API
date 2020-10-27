@@ -8,6 +8,7 @@ using Homemade.Domain.Services;
 using Homemade.Domain.Services.Communications;
 using Homemade.Resource;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,6 +28,14 @@ namespace Homemade.Controllers
             _mapper = mapper;
         }
 
+        [SwaggerOperation(
+             Summary = "List all Payments",
+             Description = "List of Payments",
+             OperationId = "ListAllPayments",
+             Tags = new[] { "Payments" }
+             )]
+        [SwaggerResponse(200, "List of Payments", typeof(IEnumerable<PaymentResource>))]
+        [ProducesResponseType(typeof(IEnumerable<PaymentResource>), 200)]
         [HttpGet]
         public async Task<IEnumerable<PaymentResource>> GetAllAsync()
         {
@@ -34,6 +43,14 @@ namespace Homemade.Controllers
             var resources =  _mapper.Map<IEnumerable<Payment>, IEnumerable<PaymentResource>>(payments);
             return resources;
         }
+
+        [SwaggerOperation(
+            Summary = "Create a Payment",
+            Description = "Create a Payment",
+            OperationId = "CreatePayment",
+            Tags = new[] { "Payments" }
+        )]
+        [SwaggerResponse(200, "Payment was created", typeof(PaymentResource))]
         [HttpPost("userCommonId")]
         public async Task<IActionResult> PostAsync([FromBody] SavePaymentResource resource, int userCommonId)
         {
@@ -49,6 +66,13 @@ namespace Homemade.Controllers
             return Ok(paymentResource);
         }
 
+        [SwaggerOperation(
+           Summary = "Update a Payment",
+           Description = "Update a Payment",
+           OperationId = "UpdatePayment",
+           Tags = new[] { "Payments" }
+       )]
+        [SwaggerResponse(200, "Payment was updated", typeof(PaymentResource))]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SavePaymentResource resource)
         {
@@ -61,6 +85,13 @@ namespace Homemade.Controllers
         }
 
         // DELETE api/<IngredientController>/5
+        [SwaggerOperation(
+            Summary = "Delete a Payment",
+            Description = "Delete a Payment",
+            OperationId = "DeletePayment",
+            Tags = new[] { "Payments" }
+        )]
+        [SwaggerResponse(200, "Payment was delete", typeof(PaymentResource))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
