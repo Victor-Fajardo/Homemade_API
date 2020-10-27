@@ -49,7 +49,6 @@ namespace Homemade.Domain.Persistence.Contexts
 
             //UserChef Entity
             builder.Entity<UserChef>().HasBaseType<User>();
-            builder.Entity<UserChef>().ToTable("UserChefs");
             //builder.Entity<UserChef>().HasKey(p => p.Id);
             builder.Entity<UserChef>().Property(P => P.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<UserChef>().Property(p => p.Name).IsRequired().HasMaxLength(40);
@@ -64,7 +63,6 @@ namespace Homemade.Domain.Persistence.Contexts
 
             //UserCommon Entity 
             builder.Entity<UserCommon>().HasBaseType<User>();
-            builder.Entity<UserCommon>().ToTable("UserCommons");
             //builder.Entity<UserCommon>().Property(P => P.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<UserCommon>().Property(p => p.Name).IsRequired().HasMaxLength(40);
             builder.Entity<UserCommon>().Property(p => p.Lastname).IsRequired().HasMaxLength(50);
