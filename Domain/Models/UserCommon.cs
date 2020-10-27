@@ -13,9 +13,9 @@ namespace Homemade.Domain.Models
         //public List<Menu> Menus;
         public int PaymentId { get; set; }
 
-        public List<Payment> Payments;
+        public List<Payment> Payments { get; set; }
 
-        public List<CommonChef> CommonChefs;
+        public List<CommonChef> CommonChefs { get; set; }
 
     }
 }

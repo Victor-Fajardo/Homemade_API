@@ -12,5 +12,6 @@ namespace Homemade.Resource
         public string Instructions { get; set; }
         public int Qualification { get; set; }
         public DateTime Date { get; set; }
+        public UserChefResource Author { get; set; }
     }
 }

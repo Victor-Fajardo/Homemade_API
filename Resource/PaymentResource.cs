@@ -13,5 +13,7 @@ namespace Homemade.Resource
         public string PaymentDetail { get; set; }
         public DateTime Date { get; set; }
         public float Total { get; set; }
+        public UserCommonResource UserCommon { get; set; }
+
     }
 }

@@ -45,15 +45,15 @@ namespace Homemade.Controllers
         }
 
         // POST api/<IngredientController>
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveIngredientResource resource)
+        [HttpPost("{recipeId}")]
+        public async Task<IActionResult> PostAsync([FromBody] SaveIngredientResource resource, int recipeId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var ingredient = _mapper.Map<SaveIngredientResource, Ingredient>(resource);
 
-            var result = await _ingredientService.SaveAsync(ingredient);
+            var result = await _ingredientService.SaveAsync(ingredient, recipeId);
 
             if (!result.Succes)
                 return BadRequest(result.Message);

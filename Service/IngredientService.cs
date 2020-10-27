@@ -13,12 +13,15 @@ namespace Homemade.Service
     {
         private readonly IIngredientRepository _ingredientRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRecipeRepository _recipeRepository;
 
-        public IngredientService(IIngredientRepository ingredientRepository, IUnitOfWork unitOfWork)
+        public IngredientService(IIngredientRepository ingredientRepository, IUnitOfWork unitOfWork, IRecipeRepository recipeRepository)
         {
             _ingredientRepository = ingredientRepository;
             _unitOfWork = unitOfWork;
+            _recipeRepository = recipeRepository;
         }
+
         public async Task<IngredientResponse> DeleteAsync(int id)
         {
             var existingIngredient = await _ingredientRepository.FindById(id);
@@ -49,8 +52,12 @@ namespace Homemade.Service
             return await _ingredientRepository.ListAsync();
         }
 
-        public async Task<IngredientResponse> SaveAsync(Ingredient ingredient)
+        public async Task<IngredientResponse> SaveAsync(Ingredient ingredient, int recipeId)
         {
+            var existingRecipe = await _recipeRepository.FindById(recipeId);
+            if (existingRecipe == null)
+                return new IngredientResponse("Recipe not found");
+            ingredient.Recipe = existingRecipe;
             try
             {
                 await _ingredientRepository.AddAsync(ingredient);

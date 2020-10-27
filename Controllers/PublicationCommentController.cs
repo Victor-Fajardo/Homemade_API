@@ -31,7 +31,7 @@ namespace Homemade.Controllers
             Tags = new[] { "Comments" }
         )]
         [SwaggerResponse(200, "List of Comment for a Publication", typeof(IEnumerable<CommentResource>))]
-        [HttpGet]
+        [HttpGet("userId")]
         public async Task<IEnumerable<CommentResource>> GetAllByPublicationIdAsync(int userId)
         {
             var comment = await _commentService.ListByPublicationIdAsync(userId);

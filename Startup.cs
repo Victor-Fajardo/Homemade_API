@@ -32,8 +32,8 @@ namespace Homemade
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseInMemoryDatabase("Homemade-api-in-memory");
-                //options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
+                //options.UseInMemoryDatabase("Homemade-api-in-memory");
+                options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
             });
 
             //Unit Of Work
@@ -48,6 +48,8 @@ namespace Homemade
             services.AddScoped<IPublicationRepository, PublicationRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IRecipeStepsRepository, RecipeStepsRepository>();
+
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -61,6 +63,8 @@ namespace Homemade
             services.AddScoped<IPublicationService, PublicationService>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IRecipeStepsService, RecipeStepsService>();
+
 
             services.AddAutoMapper(typeof(Startup));
 

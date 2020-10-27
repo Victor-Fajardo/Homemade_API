@@ -14,16 +14,13 @@ namespace Homemade.Domain.Persistence.Contexts
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<UserChef> UserChefs { get; set; }
-
         public DbSet<UserCommon> UserCommons { get; set; }
-
         public DbSet<CommonChef> CommonChefs { get; set;  }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Publication> Publications { get; set; }
-        
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<RecipeStep> RecipeSteps { get; set; }
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
@@ -39,10 +36,8 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Ingredient>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Ingredient>().Property(p => p.Name).IsRequired().HasMaxLength(40);
             builder.Entity<Ingredient>().Property(p => p.UnitOfMeasurement).IsRequired();
-            builder.Entity<Ingredient>().HasData
-                (
-                new Ingredient { Id = 100, Name = "Sal de Mesa", UnitOfMeasurement = EUnitOfMeasurement.Gram }
-                );
+            builder.Entity<Ingredient>().HasOne(pt => pt.Recipe).WithMany(p => p.Ingredients).HasForeignKey(pt => pt.RecipeId);
+
 
             //User Entity
             builder.Entity<User>().ToTable("Users")
@@ -54,7 +49,6 @@ namespace Homemade.Domain.Persistence.Contexts
 
             //UserChef Entity
             builder.Entity<UserChef>().HasBaseType<User>();
-            builder.Entity<UserChef>().ToTable("UserChefs");
             //builder.Entity<UserChef>().HasKey(p => p.Id);
             builder.Entity<UserChef>().Property(P => P.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<UserChef>().Property(p => p.Name).IsRequired().HasMaxLength(40);
@@ -69,7 +63,6 @@ namespace Homemade.Domain.Persistence.Contexts
 
             //UserCommon Entity 
             builder.Entity<UserCommon>().HasBaseType<User>();
-            builder.Entity<UserCommon>().ToTable("UserCommons");
             //builder.Entity<UserCommon>().Property(P => P.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<UserCommon>().Property(p => p.Name).IsRequired().HasMaxLength(40);
             builder.Entity<UserCommon>().Property(p => p.Lastname).IsRequired().HasMaxLength(50);
@@ -120,20 +113,26 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Recipe>().HasKey(p => p.Id);
             builder.Entity<Recipe>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Recipe>().Property(p => p.NameRecipe).IsRequired().HasMaxLength(50);
-            builder.Entity<Recipe>().Property(p => p.Qualification).IsRequired();
             builder.Entity<Recipe>().Property(p => p.Date).IsRequired();
+            builder.Entity<Recipe>().HasOne(pt => pt.Author).WithMany(p => p.Recipes).HasForeignKey(pt => pt.AuthorId);
 
             //Payment Entity
-            builder.Entity<Payment>().ToTable("Payment");
+            builder.Entity<Payment>().ToTable("Payments");
             builder.Entity<Payment>().HasKey(p => p.Id);
             builder.Entity<Payment>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Payment>().Property(p => p.CardNumber).IsRequired();
             builder.Entity<Payment>().Property(p => p.CardName).IsRequired().HasMaxLength(50);
             builder.Entity<Payment>().Property(p => p.Date).IsRequired();
             builder.Entity<Payment>().Property(p => p.Total).IsRequired();
-            //builder.Entity<Payment>().HasOne(p => p.UserCommons).WithMany(p => p.Payments).HasForeignKey(p => p.UserCommonId);
-        
-        
+            builder.Entity<Payment>().HasOne(p => p.UserCommon).WithMany(p => p.Payments).HasForeignKey(pt => pt.UserCommonId);
+
+            //RecipeStep Entity
+            builder.Entity<RecipeStep>().ToTable("RecipeSteps");
+            builder.Entity<RecipeStep>().HasKey(p => p.Id);
+            builder.Entity<RecipeStep>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<RecipeStep>().Property(p => p.Instructions).IsRequired().HasMaxLength(200);
+            builder.Entity<RecipeStep>().HasOne(p => p.Recipe).WithMany(pt => pt.RecipeSteps).HasForeignKey(p => p.RecipeId);
+
         }
 
     }

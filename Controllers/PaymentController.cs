@@ -34,15 +34,15 @@ namespace Homemade.Controllers
             var resources =  _mapper.Map<IEnumerable<Payment>, IEnumerable<PaymentResource>>(payments);
             return resources;
         }
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SavePaymentResource resource)
+        [HttpPost("userCommonId")]
+        public async Task<IActionResult> PostAsync([FromBody] SavePaymentResource resource, int userCommonId)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid Input");
 
             var payment = _mapper.Map<SavePaymentResource, Payment>(resource);
 
-            var result = await _paymentService.SaveAsync(payment);
+            var result = await _paymentService.SaveAsync(payment, userCommonId);
             if (!result.Succes)
                 return BadRequest(result.Message);
             var paymentResource = _mapper.Map<Payment, PaymentResource>(result.Resource);
