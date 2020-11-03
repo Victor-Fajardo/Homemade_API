@@ -21,6 +21,8 @@ namespace Homemade.Domain.Persistence.Contexts
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<RecipeStep> RecipeSteps { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public AppDbContext (DbContextOptions<AppDbContext> options): base(options)
         {
@@ -132,6 +134,25 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<RecipeStep>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<RecipeStep>().Property(p => p.Instructions).IsRequired().HasMaxLength(200);
             builder.Entity<RecipeStep>().HasOne(p => p.Recipe).WithMany(pt => pt.RecipeSteps).HasForeignKey(p => p.RecipeId);
+
+
+            //Chats Entity
+            builder.Entity<Chat>().ToTable("Chats");
+            builder.Entity<Chat>().HasKey(p => p.Id);
+            builder.Entity<Chat>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Chat>().HasOne(p => p.User1).WithMany(p => p.Chats).HasForeignKey(p => p.User1Id);
+            builder.Entity<Chat>().HasOne(p => p.User2).WithMany(p => p.Chats).HasForeignKey(p => p.User2Id);
+
+
+            //Messages Entity
+            builder.Entity<Message>().ToTable("Messages");
+            builder.Entity<Message>().HasKey(p => p.Id);
+            builder.Entity<Message>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Message>().Property(p => p.Text).IsRequired().HasMaxLength(200);
+            builder.Entity<Message>().Property(p => p.File);
+            builder.Entity<Message>().HasOne(p => p.User).WithMany(p => p.Messages).HasForeignKey(p => p.UserId);
+            builder.Entity<Message>().HasOne(p => p.Chat).WithMany(p => p.Messages).HasForeignKey(p => p.ChatId);
+
 
         }
 
