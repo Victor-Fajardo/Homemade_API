@@ -12,8 +12,14 @@ namespace Homemade.Service
     public class ChatService : IChatService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IChatRepository _chatRepository;
 
+        public ChatService(IChatRepository chatRepository, IUnitOfWork unitOfWork)
+        {
+            _chatRepository = chatRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task<ChatResponse> Delete(int id)
         {
@@ -30,6 +36,11 @@ namespace Homemade.Service
             {
                 return new ChatResponse($"An error ocurred while deleting Chat: {ex.Message}");
             }
+        }
+
+        public async Task<IEnumerable<Chat>> ListAsync()
+        {
+            return await _chatRepository.ListAsync();
         }
 
         public async Task<ChatResponse> SaveAsync(Chat chat, int user1Id, int user2Id)
@@ -58,6 +69,15 @@ namespace Homemade.Service
                 return new ChatResponse(
                     $"An error ocurred while saving the Message: {ex.Message}");
             }
+
+        }
+
+        public async Task<ChatResponse> GetByIdAsync(int id)
+        {
+            var existingChat = await _chatRepository.FindById(id);
+            if (existingChat == null)
+                return new ChatResponse("Chat not found");
+            return new ChatResponse(existingChat);
         }
     }
 }

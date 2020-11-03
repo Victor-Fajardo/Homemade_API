@@ -25,6 +25,11 @@ namespace Homemade.Persistence.Repositories
             return await _context.Messages.FindAsync(id);
         }
 
+        public Task<IEnumerable<Message>> ListAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Message>> ListBychatIdAsync(int chatId)
         {
             return await _context.Messages

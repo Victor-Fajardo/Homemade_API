@@ -12,8 +12,14 @@ namespace Homemade.Service
     public class MessageService : IMessageService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMessageRepository _messageRepository;
 
+        public MessageService(IMessageRepository messageRepository, IUnitOfWork unitOfWork)
+        {
+            _messageRepository = messageRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         public async Task<MessageResponse> Delete(int id)
         {
@@ -30,6 +36,11 @@ namespace Homemade.Service
             {
                 return new MessageResponse($"An error ocurred while deleting Message: {ex.Message}");
             }
+        }
+
+        public async Task<IEnumerable<Message>> ListAsync()
+        {
+            return await _messageRepository.ListAsync();
         }
 
         public async Task<IEnumerable<Message>> ListByChatIdAsync(int chatId)
@@ -57,6 +68,14 @@ namespace Homemade.Service
                 return new MessageResponse(
                     $"An error ocurred while saving the Message: {ex.Message}");
             }
+        }
+
+        public async Task<MessageResponse> GetByIdAsync(int id)
+        {
+            var existingMessage = await _messageRepository.FindById(id);
+            if (existingMessage == null)
+                return new MessageResponse("Message not found");
+            return new MessageResponse(existingMessage);
         }
     }
 }

@@ -31,6 +31,11 @@ namespace Homemade.Persistence.Repositories
                 .Where(b => b.User1Id == user1Id && b.User2Id == user2Id).ToListAsync();
         }
 
+        public Task<IEnumerable<Chat>> ListAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(Chat chat)
         {
             _context.Chats.Remove(chat);
