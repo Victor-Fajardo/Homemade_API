@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Homemade.Domain.Models;
 
 namespace Homemade.Resource
 {
-    public class MenuResource
+    public class SaveMenuResource
     {
-        public int Id { get; set; }
+        [Required]
         public DateTime DateOfRecipe { get; set; }
-        public UserCommon UserCommon { get; set; }
     }
 }
