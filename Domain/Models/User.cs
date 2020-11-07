@@ -27,7 +27,9 @@ namespace Homemade.Domain.Models
 
         public List<Message> Messages { get; set; }
 
-        public List<Chat> Chats { get; set; }
+        public List<Chat> ChatsCreados { get; set; }
+
+        public List<Chat> ChatsUnidos { get; set; }
 
         public List<Comment> Comments { get; set; }
 

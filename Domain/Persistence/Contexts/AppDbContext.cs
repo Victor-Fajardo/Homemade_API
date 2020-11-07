@@ -142,8 +142,8 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Chat>().ToTable("Chats");
             builder.Entity<Chat>().HasKey(p => p.Id);
             builder.Entity<Chat>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Chat>().HasOne(p => p.User1).WithMany(p => p.Chats).HasForeignKey(p => p.User1Id);
-            builder.Entity<Chat>().HasOne(p => p.User2).WithMany(p => p.Chats).HasForeignKey(p => p.User2Id);
+            builder.Entity<Chat>().HasOne(p => p.User1).WithMany(p => p.ChatsCreados).HasForeignKey(p => p.User1Id);
+            builder.Entity<Chat>().HasOne(p => p.User2).WithMany(p => p.ChatsUnidos).HasForeignKey(p => p.User2Id);
 
 
             //Messages Entity
