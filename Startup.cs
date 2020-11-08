@@ -32,8 +32,8 @@ namespace Homemade
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseInMemoryDatabase("Homemade-api-in-memory");
-                //options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
+                //options.UseInMemoryDatabase("Homemade-api-in-memory");
+                options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
             });
 
             //Unit Of Work
