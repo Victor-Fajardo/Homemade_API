@@ -12,12 +12,14 @@ namespace Homemade.Service
     public class PublicationService : IPublicationService
     {
         private readonly IPublicationRepository _publicationRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserChefRepository _userChefRepository;
         private readonly IUserCommonRepository _userCommonRepository;
 
-        public PublicationService(IPublicationRepository publicationRepository, IUserChefRepository userChefRepository, IUserCommonRepository userCommonRepository)
+        public PublicationService(IPublicationRepository publicationRepository, IUserChefRepository userChefRepository, IUserCommonRepository userCommonRepository, IUnitOfWork unitOfWork)
         {
             _publicationRepository = publicationRepository;
+            _unitOfWork = unitOfWork;
             _userChefRepository = userChefRepository;
             _userCommonRepository = userCommonRepository;
         }
@@ -31,6 +33,7 @@ namespace Homemade.Service
             try
             {
                 _publicationRepository.Remove(existingPublication);
+                await _unitOfWork.CompleteAsync();
                 return new PublicationResponse(existingPublication);
             }
             catch(Exception ex)
@@ -57,6 +60,7 @@ namespace Homemade.Service
             try
             {
                 await _publicationRepository.AddAsync(publication);
+                await _unitOfWork.CompleteAsync();
                 return new PublicationResponse(publication);
             }
             catch (Exception ex)
@@ -76,6 +80,7 @@ namespace Homemade.Service
             try
             {
                 _publicationRepository.Update(existingPublication);
+                await _unitOfWork.CompleteAsync();
                 return new PublicationResponse(existingPublication);
             }
             catch (Exception ex)

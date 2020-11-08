@@ -13,13 +13,15 @@ namespace Homemade.Service
     public class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IPublicationRepository _publicationRepository;
         private readonly IUserChefRepository _userChefRepository;
         private readonly IUserCommonRepository _userCommonRepository;
 
-        public CommentService(ICommentRepository commentRepository, IPublicationRepository publicationRepository, IUserChefRepository userChefRepository, IUserCommonRepository userCommonRepository)
+        public CommentService(ICommentRepository commentRepository, IPublicationRepository publicationRepository, IUserChefRepository userChefRepository, IUserCommonRepository userCommonRepository, IUnitOfWork unitOfWork)
         {
             _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
             _publicationRepository = publicationRepository;
             _userChefRepository = userChefRepository;
             _userCommonRepository = userCommonRepository;
@@ -34,6 +36,7 @@ namespace Homemade.Service
             try
             {
                 _commentRepository.Remove(existingComment);
+                await _unitOfWork.CompleteAsync();
                 return new CommentResponse(existingComment);
             }
             catch (Exception ex)
@@ -67,6 +70,7 @@ namespace Homemade.Service
             try
             {
                 await _commentRepository.AddAsync(comment);
+                await _unitOfWork.CompleteAsync();
                 return new CommentResponse(comment);
             }
             catch (Exception ex)
@@ -86,6 +90,7 @@ namespace Homemade.Service
             try 
             {
                 _commentRepository.Update(existingComment);
+                await _unitOfWork.CompleteAsync();
                 return new CommentResponse(existingComment);
             }
             catch (Exception ex)

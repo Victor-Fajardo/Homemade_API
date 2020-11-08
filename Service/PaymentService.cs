@@ -13,11 +13,13 @@ namespace Homemade.Service
     public class PaymentService : IPaymentService
     {
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserCommonRepository _userCommonRepository;
 
-        public PaymentService(IPaymentRepository paymentRepository, IUserCommonRepository userCommonRepository)
+        public PaymentService(IPaymentRepository paymentRepository, IUserCommonRepository userCommonRepository, IUnitOfWork unitOfWork)
         {
             _paymentRepository = paymentRepository;
+            _unitOfWork = unitOfWork;
             _userCommonRepository = userCommonRepository;
         }
 
@@ -30,6 +32,7 @@ namespace Homemade.Service
             try
             {
                 _paymentRepository.Remove(existingPayment);
+                await _unitOfWork.CompleteAsync();
                 return new PaymentResponse(existingPayment);
             }
             catch (Exception ex)
@@ -63,7 +66,7 @@ namespace Homemade.Service
             try
             {
                 await _paymentRepository.AddAsync(payment);
-
+                await _unitOfWork.CompleteAsync();
                 return new PaymentResponse(payment);
             }
             catch(Exception ex)
@@ -83,6 +86,7 @@ namespace Homemade.Service
             try
             {
                 _paymentRepository.Update(existingPayment);
+                await _unitOfWork.CompleteAsync();
                 return new PaymentResponse(existingPayment);
             }
             catch(Exception ex)

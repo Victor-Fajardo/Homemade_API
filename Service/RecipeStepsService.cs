@@ -12,11 +12,13 @@ namespace Homemade.Service
     public class RecipeStepsService : IRecipeStepsService
     {
         private readonly IRecipeStepsRepository _recipeStepsRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IRecipeRepository _recipeRepository;
 
-        public RecipeStepsService(IRecipeStepsRepository recipeStepsRepository, IRecipeRepository recipeRepository)
+        public RecipeStepsService(IRecipeStepsRepository recipeStepsRepository, IRecipeRepository recipeRepository, IUnitOfWork unitOfWork)
         {
             _recipeStepsRepository = recipeStepsRepository;
+            _unitOfWork = unitOfWork;
             _recipeRepository = recipeRepository;
         }
 
@@ -29,6 +31,7 @@ namespace Homemade.Service
             try
             {
                 _recipeStepsRepository.Remove(existingRecipeSteps);
+                await _unitOfWork.CompleteAsync();
                 return new RecipeStepsResponse(existingRecipeSteps);
             }
             catch (Exception ex)
@@ -51,6 +54,7 @@ namespace Homemade.Service
             try
             {
                 await _recipeStepsRepository.AddAsync(recipeStep);
+                await _unitOfWork.CompleteAsync();
                 return new RecipeStepsResponse(recipeStep);
             }
             catch (Exception ex)
@@ -72,6 +76,7 @@ namespace Homemade.Service
             try
             {
                 _recipeStepsRepository.Update(existingRecipeSteps);
+                await _unitOfWork.CompleteAsync();
                 return new RecipeStepsResponse(existingRecipeSteps);
             }
             catch (Exception ex)
