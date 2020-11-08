@@ -39,6 +39,7 @@ namespace Homemade.Domain.Persistence.Contexts
             builder.Entity<Ingredient>().HasKey(p => p.Id);
             builder.Entity<Ingredient>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Ingredient>().Property(p => p.Name).IsRequired().HasMaxLength(40);
+            builder.Entity<Ingredient>().Property(p => p.Quantity).IsRequired();
             builder.Entity<Ingredient>().Property(p => p.UnitOfMeasurement).IsRequired();
             builder.Entity<Ingredient>().HasOne(pt => pt.Recipe).WithMany(p => p.Ingredients).HasForeignKey(pt => pt.RecipeId);
 
