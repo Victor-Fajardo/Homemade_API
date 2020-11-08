@@ -9,7 +9,7 @@ namespace Homemade.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public long Quantity { get; set; }
+        public string Quantity { get; set; }
         public EUnitOfMeasurement UnitOfMeasurement { get; set; }
         public int RecipeId { get; set; }
         public Recipe Recipe { get; set; }
