@@ -6,13 +6,13 @@ using Homemade.Domain.Models;
 
 namespace Homemade.Domain.Services.Communications
 {
-    public class MenuResponse : BaseResponse<Menu>
+    public class MenuRecipeResponse : BaseResponse<MenuRecipe>
     {
-        public MenuResponse(Menu resource) : base(resource)
+        public MenuRecipeResponse(MenuRecipe resource) : base(resource)
         {
         }
 
-        public MenuResponse(string message) : base(message)
+        public MenuRecipeResponse(string message) : base(message)
         {
         }
     }

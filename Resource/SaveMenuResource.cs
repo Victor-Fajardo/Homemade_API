@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Homemade.Resource
 {
-    public class SaveIngredientResource
+    public class SaveMenuResource
     {
         [Required]
-        [MaxLength(30)]
-        public string Name { get; set; }
-        [Required]
-        public string Quantity { get; set; }
+        public DateTime DateOfRecipe { get; set; }
     }
 }

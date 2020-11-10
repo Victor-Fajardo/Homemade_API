@@ -12,10 +12,12 @@ namespace Homemade.Service
     public class CommonChefService : ICommonChefService
     {
         private readonly ICommonChefRepository _commonChefRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CommonChefService(ICommonChefRepository commonChefRepository)
+        public CommonChefService(ICommonChefRepository commonChefRepository, IUnitOfWork unitOfWork)
         {
             _commonChefRepository = commonChefRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CommonChefResponse> AssingCommonChefAsync(int userChefId, int userCommonId)
@@ -23,6 +25,7 @@ namespace Homemade.Service
             try
             {
                 await _commonChefRepository.AssignCommonChef(userChefId, userCommonId);
+                await _unitOfWork.CompleteAsync();
             }
             catch (Exception ex)
             {
@@ -52,6 +55,7 @@ namespace Homemade.Service
             {
                 CommonChef commonChef = await _commonChefRepository.FindByCommonIdAndChefId(userChefId, userCommonId);
                 _commonChefRepository.Remove(commonChef);
+                await _unitOfWork.CompleteAsync();
                 return new CommonChefResponse(commonChef);
             }
             catch(Exception ex) 

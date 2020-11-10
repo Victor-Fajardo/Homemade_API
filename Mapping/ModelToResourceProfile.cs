@@ -20,6 +20,8 @@ namespace Homemade.Mapping
             CreateMap<Recipe, RecipeResource>();
             CreateMap<Payment, PaymentResource>();
             CreateMap<RecipeStep, RecipeStepsResource>();
+            CreateMap<Chat, ChatResource>();
+            CreateMap<Menu, MenuResource>();
 
         }
     }

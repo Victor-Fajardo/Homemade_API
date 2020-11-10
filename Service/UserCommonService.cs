@@ -12,11 +12,13 @@ namespace Homemade.Service
     public class UserCommonService : IUserCommonService
     {
         private readonly IUserCommonRepository _userCommonRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ICommonChefRepository _commonChefRepository;
 
-        public UserCommonService(IUserCommonRepository userCommonRepository, ICommonChefRepository commonChefRepository)
+        public UserCommonService(IUserCommonRepository userCommonRepository, ICommonChefRepository commonChefRepository, IUnitOfWork unitOfWork)
         {
             _userCommonRepository = userCommonRepository;
+            _unitOfWork = unitOfWork;
             _commonChefRepository = commonChefRepository;
         }
 
@@ -28,6 +30,7 @@ namespace Homemade.Service
             try
             {
                 _userCommonRepository.Remove(existingUserCommon);
+                await _unitOfWork.CompleteAsync();
                 return new UserCommonResponse(existingUserCommon);
             }
             catch (Exception ex)
@@ -71,6 +74,7 @@ namespace Homemade.Service
             try
             {
                 await _userCommonRepository.AddAsync(userCommon);
+                await _unitOfWork.CompleteAsync();
                 return new UserCommonResponse(userCommon);
             }
             catch (Exception ex)
@@ -94,6 +98,7 @@ namespace Homemade.Service
             try
             {
                 _userCommonRepository.Update(existingUserCommon);
+                await _unitOfWork.CompleteAsync();
                 return new UserCommonResponse(existingUserCommon);
             }
             catch (Exception ex)

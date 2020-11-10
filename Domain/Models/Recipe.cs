@@ -17,6 +17,6 @@ namespace Homemade.Domain.Models
         public List<Ingredient> Ingredients { get; set; }
         public List<RecipeStep> RecipeSteps { get; set; }
         //public List<Comment> Comments { get; set; }
-
+        public List<MenuRecipe> MenuRecipes { get; set; }
     }
 }
