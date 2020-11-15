@@ -30,6 +30,11 @@ namespace Homemade.Persistence.Repositories
             return await _context.Ingredients.ToListAsync();
         }
 
+        public async Task<IEnumerable<Ingredient>> ListByRecipeIdAsync(int recipeId)
+        {
+            return await _context.Ingredients.Where(b => b.RecipeId == recipeId).ToListAsync();
+        }
+
         public void Remove(Ingredient ingredient)
         {
             _context.Ingredients.Remove(ingredient);

@@ -10,6 +10,6 @@ namespace Homemade.Resource
     {
         public int Id { get; set; }
         public DateTime DateOfRecipe { get; set; }
-        public UserCommon UserCommon { get; set; }
+        public UserCommonResource UserCommon { get; set; }
     }
 }
