@@ -32,8 +32,8 @@ namespace Homemade
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                //options.UseInMemoryDatabase("Homemade-api-in-memory");
-                options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
+                options.UseInMemoryDatabase("Homemade-api-in-memory");
+                //options.UseMySQL(Configuration.GetConnectionString("MySQLConnection"));
             });
 
             //Unit Of Work
@@ -53,6 +53,7 @@ namespace Homemade
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IMenuRecipeRepository, MenuRecipeRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
 
 
@@ -74,7 +75,7 @@ namespace Homemade
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IMenuRecipeService, MenuRecipeService>();
-
+            services.AddScoped<IUserService, UserService>();
 
 
 

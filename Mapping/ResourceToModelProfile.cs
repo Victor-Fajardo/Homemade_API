@@ -22,6 +22,7 @@ namespace Homemade.Mapping
             CreateMap<SaveRecipeStepsResource, RecipeStep>();
             CreateMap<SaveChatResource, Chat>();
             CreateMap<SaveMenuResource, Menu>();
+            CreateMap<SaveUserResource, User>();
 
         }
     }
