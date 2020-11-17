@@ -12,6 +12,7 @@ namespace Homemade.Domain.Services
         Task<IEnumerable<UserChef>> ListAsync();
 
         Task<UserChefResponse> GetByIdAsync(int id);
+        Task<UserChefResponse> GetByEmailAsync(string email);
 
         Task<IEnumerable<UserChef>> GetByNameAsync(string name);
 

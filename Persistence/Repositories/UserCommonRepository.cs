@@ -20,6 +20,11 @@ namespace Homemade.Persistence.Repositories
             await _context.UserCommons.AddAsync(userCommon);
         }
 
+        public async Task<UserCommon> FindByEmail(string email)
+        {
+            return await _context.UserCommons.FirstOrDefaultAsync(a => a.Email == email);
+        }
+
         public async Task<UserCommon> FindById(int id)
         {
             return await _context.UserCommons.FindAsync(id);

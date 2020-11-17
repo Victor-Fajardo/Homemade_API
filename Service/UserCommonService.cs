@@ -14,6 +14,7 @@ namespace Homemade.Service
         private readonly IUserCommonRepository _userCommonRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICommonChefRepository _commonChefRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserCommonService(IUserCommonRepository userCommonRepository, ICommonChefRepository commonChefRepository, IUnitOfWork unitOfWork)
         {
@@ -37,6 +38,14 @@ namespace Homemade.Service
             {
                 return new UserCommonResponse($"An error ocurred while deleting UserCommon: {ex.Message}");
             }
+        }
+
+        public async Task<UserCommonResponse> GetByEmailAsync(string email)
+        {
+            var existingUserCommon = await _userCommonRepository.FindByEmail(email);
+            if (existingUserCommon == null)
+                return new UserCommonResponse("UserCommon not found");
+            return new UserCommonResponse(existingUserCommon);
         }
 
         public async Task<UserCommonResponse> GetByIdAsync(int id)

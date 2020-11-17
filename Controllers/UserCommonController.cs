@@ -63,6 +63,24 @@ namespace Homemade.Controllers
         }
 
         [SwaggerOperation(
+            Summary = "List all by Commons Email",
+            Description = "List by Commons Email",
+            OperationId = "ListAllByCommonsEmail",
+            Tags = new[] { "Users Common" }
+        )]
+        [SwaggerResponse(200, "List of chefs users by email", typeof(UserChefResource))]
+        [HttpGet("email")]
+        public async Task<IActionResult> GetUserCommonByEmail(string email)
+        {
+            var result = await _userCommonService.GetByEmailAsync(email);
+
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var resource = _mapper.Map<UserCommon, UserCommonResource>(result.Resource);
+            return Ok(resource);
+        }
+
+        [SwaggerOperation(
             Summary = "List all by Users Common Lastname",
             Description = "List by Users Common Lastname",
             OperationId = "ListAllByUsersCommonLastname",

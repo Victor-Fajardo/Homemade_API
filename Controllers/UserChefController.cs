@@ -47,6 +47,24 @@ namespace Homemade.Controllers
         }
 
         [SwaggerOperation(
+            Summary = "List all by Chefs Email",
+            Description = "List by Chefs Email",
+            OperationId = "ListAllByChefsEmail",
+            Tags = new[] { "Users Chefs" }
+        )]
+        [SwaggerResponse(200, "List of chefs users by email", typeof(UserChefResource))]
+        [HttpGet("email")]
+        public async Task<IActionResult> GetUserChefByEmail(string email)
+        {
+            var result = await _userChefService.GetByEmailAsync(email);
+
+            if (!result.Succes)
+                return BadRequest(result.Message);
+            var resource = _mapper.Map<UserChef, UserChefResource>(result.Resource);
+            return Ok(resource);
+        }
+
+        [SwaggerOperation(
             Summary = "List all by Chefs Name",
             Description = "List by Chefs name",
             OperationId = "ListAllByChefsName",

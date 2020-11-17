@@ -12,7 +12,7 @@ namespace Homemade.Domain.Services
         Task<IEnumerable<UserCommon>> ListAsync();
 
         Task<UserCommonResponse> GetByIdAsync(int id);
-
+        Task<UserCommonResponse> GetByEmailAsync(string email);
         Task<IEnumerable<UserCommon>> GetByNameAsync(string name);
 
         Task<IEnumerable<UserCommon>> GetByLastnameAsync(string lastname);

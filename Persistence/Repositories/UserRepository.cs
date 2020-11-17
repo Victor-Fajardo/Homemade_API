@@ -1,6 +1,7 @@
 ﻿using Homemade.Domain.Models;
 using Homemade.Domain.Persistence.Contexts;
 using Homemade.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace Homemade.Persistence.Repositories
         public async Task<User> FindById(int id)
         {
             return await _context.Users.FindAsync(id);
+        }
+        public async Task<User> FindByEmail(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(a => a.Email == email);
         }
     }
 }

@@ -11,7 +11,9 @@ namespace Homemade.Domain.Repositories
         Task<IEnumerable<UserChef>> ListAsync();
         Task AddAsync(UserChef userChef);
         Task<UserChef> FindById(int id);
-
+        Task<UserChef> FindByEmail(string email);
+        //Task<UserChef> FindByName(string name);
+        //Task<UserChef> FindByLastName(string lastname);
         Task<IEnumerable<UserChef>> ListByName(string name);
 
         Task<IEnumerable<UserChef>> ListByLastname(string lastname);

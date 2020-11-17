@@ -49,6 +49,14 @@ namespace Homemade.Service
             return new UserChefResponse(existingUserChef);
         }
 
+        public async Task<UserChefResponse> GetByEmailAsync(string email)
+        {
+            var existingUserChef = await _userChefRepository.FindByEmail(email);
+            if (existingUserChef == null)
+                return new UserChefResponse("UserChef not found");
+            return new UserChefResponse(existingUserChef);
+        }
+
         public async Task<IEnumerable<UserChef>> GetByLastnameAsync(string lastname)
         {
             return await _userChefRepository.ListByLastname(lastname); 

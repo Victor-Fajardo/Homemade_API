@@ -9,5 +9,6 @@ namespace Homemade.Domain.Repositories
     public interface IUserRepository
     {
         Task<User> FindById(int id);
+        Task<User> FindByEmail(string email);
     }
 }

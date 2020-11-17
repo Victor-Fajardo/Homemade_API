@@ -25,6 +25,10 @@ namespace Homemade.Persistence.Repositories
             return await _context.UserChefs.FindAsync(id);
         }
 
+        public async Task<UserChef> FindByEmail(string email)
+        {
+            return await _context.UserChefs.FirstOrDefaultAsync(a=>a.Email==email);
+        }
         public async Task<IEnumerable<UserChef>> ListByName(string name)
         {
 
