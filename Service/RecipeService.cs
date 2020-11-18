@@ -52,6 +52,11 @@ namespace Homemade.Service
             return await _recipeRepository.ListAsync();
         }
 
+        public async Task<IEnumerable<Recipe>> ListByName(string name)
+        {
+            return await _recipeRepository.ListByName(name);
+        }
+
         public async Task<RecipeResponse> SaveAsync(Recipe recipe, int userChefId)
         {
             var existingUserChef = await _userChefRepository.FindById(userChefId);

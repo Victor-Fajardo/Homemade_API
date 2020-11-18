@@ -28,6 +28,24 @@ namespace Homemade.Controllers
             _mapper = mapper;
         }
 
+        // GET: api/<RecipeController>
+        [SwaggerOperation(
+             Summary = "List all recipes by name",
+             Description = "List of recipes by name",
+             OperationId = "ListAllRecipesbyname",
+             Tags = new[] { "Recipes" }
+             )]
+        [SwaggerResponse(200, "List of Recipes by name", typeof(IEnumerable<RecipeResource>))]
+        [ProducesResponseType(typeof(IEnumerable<RecipeResource>), 200)]
+        [HttpGet("name")]
+        public async Task<IEnumerable<RecipeResource>> GetAllByNameAsync(string name)
+        {
+            var recipes = await _recipeService.ListByName(name);
+            var resource = _mapper.Map<IEnumerable<Recipe>,
+                IEnumerable<RecipeResource>>(recipes);
+            return resource;
+        }
+
 
         // GET: api/<RecipeController>
         [SwaggerOperation(
