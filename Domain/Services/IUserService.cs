@@ -8,6 +8,7 @@ namespace Homemade.Domain.Services
 {
     public interface IUserService
     {
+        AuthenticationResponse Authenticate(AuthenticationRequest request);
         Task<UserResponse> GetByEmailAsync(string email);
     }
 }

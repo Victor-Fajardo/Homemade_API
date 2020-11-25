@@ -23,5 +23,10 @@ namespace Homemade.Persistence.Repositories
         {
             return await _context.Users.FirstOrDefaultAsync(a => a.Email == email);
         }
+
+        public User FindByEmailandPassword(string email, string password)
+        {
+            return _context.Users.SingleOrDefault(a => a.Email == email && a.Password == password);
+        }
     }
 }

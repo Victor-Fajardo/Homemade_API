@@ -10,5 +10,6 @@ namespace Homemade.Domain.Repositories
     {
         Task<User> FindById(int id);
         Task<User> FindByEmail(string email);
+        User FindByEmailandPassword(string email, string password);
     }
 }
