@@ -12,11 +12,19 @@ namespace Homemade.Service
     public class MenuRecipeService : IMenuRecipeService
     {
         private readonly IMenuRecipeRepository _menuRecipeRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public MenuRecipeService(IMenuRecipeRepository menuRecipeRepository, IUnitOfWork unitOfWork)
+        {
+            _menuRecipeRepository = menuRecipeRepository;
+            _unitOfWork = unitOfWork;
+        }
         public async Task<MenuRecipeResponse> AssingMenuRecipeAsync(int menuId, int recipeId)
         {
             try
             {
                 await _menuRecipeRepository.AssignMenuRecipe(menuId, recipeId);
+                await _unitOfWork.CompleteAsync();
             }
             catch (Exception ex)
             {
@@ -46,6 +54,7 @@ namespace Homemade.Service
             {
                 MenuRecipe menuRecipe = await _menuRecipeRepository.FindByMenuIdAndRecipeId(menuId, recipeId);
                 _menuRecipeRepository.Remove(menuRecipe);
+                await _unitOfWork.CompleteAsync();
                 return new MenuRecipeResponse(menuRecipe);
             }
             catch (Exception ex)

@@ -14,12 +14,14 @@ namespace Homemade.Service
         private readonly IMenuRepository _menuRepository;
         private readonly IUserCommonRepository _userCommonRepository;
         private readonly IMenuRecipeRepository _menuRecipeRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public MenuService(IMenuRepository menuRepository, IUserCommonRepository userCommonRepository, IMenuRecipeRepository menuRecipeRepository)
+        public MenuService(IMenuRepository menuRepository, IUserCommonRepository userCommonRepository, IMenuRecipeRepository menuRecipeRepository, IUnitOfWork unitOfWork)
         {
             _menuRepository = menuRepository;
             _userCommonRepository = userCommonRepository;
             _menuRecipeRepository = menuRecipeRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<MenuResponse> DeleteAsync(int id)
@@ -31,6 +33,7 @@ namespace Homemade.Service
             try
             {
                 _menuRepository.Remove(existingMenu);
+                await _unitOfWork.CompleteAsync();
                 return new MenuResponse(existingMenu);
             }
             catch (Exception ex)
@@ -72,6 +75,7 @@ namespace Homemade.Service
             try
             {
                 await _menuRepository.AddAsync(menu);
+                await _unitOfWork.CompleteAsync();
                 return new MenuResponse(menu);
             }
             catch (Exception ex)
@@ -91,6 +95,7 @@ namespace Homemade.Service
             try
             {
                 _menuRepository.Update(existingMenu);
+                await _unitOfWork.CompleteAsync();
                 return new MenuResponse(existingMenu);
             }
             catch (Exception ex)
