@@ -20,6 +20,11 @@ namespace Homemade.Persistence.Repositories
             await _context.MenuRecipes.AddAsync(menuRecipe);
         }
 
+        public async Task<MenuRecipe> FindById(int id)
+        {
+            return await _context.MenuRecipes.FindAsync(id);
+        }
+
         public async Task AssignMenuRecipe(int menuId, int recipeId)
         {
             MenuRecipe menuRecipe = await _context.MenuRecipes.FindAsync(menuId, recipeId);
@@ -66,6 +71,11 @@ namespace Homemade.Persistence.Repositories
         public void Remove(MenuRecipe menuRecipe)
         {
             _context.MenuRecipes.Remove(menuRecipe);
+        }
+
+        public void Update(MenuRecipe menuRecipe)
+        {
+            _context.MenuRecipes.Update(menuRecipe);
         }
 
         public async void UnassignMenuRecipe(int menuId, int recipeId)
