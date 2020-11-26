@@ -46,6 +46,22 @@ namespace Homemade.Controllers
             return resource;
         }
 
+        [SwaggerOperation(
+             Summary = "List all recipes by Id",
+             Description = "List of recipes by Id",
+             OperationId = "ListAllRecipesbyId",
+             Tags = new[] { "Recipes" }
+             )]
+        [SwaggerResponse(200, "List of Recipes by Id", typeof(IEnumerable<RecipeResource>))]
+        [ProducesResponseType(typeof(IEnumerable<RecipeResource>), 200)]
+        [HttpGet("{id}")]
+        public async Task<IEnumerable<RecipeResource>> GetAllByIdAsync(int id)
+        {
+            var recipes = await _recipeService.ListById(id);
+            var resource = _mapper.Map<IEnumerable<Recipe>,
+                IEnumerable<RecipeResource>>(recipes);
+            return resource;
+        }
 
         // GET: api/<RecipeController>
         [SwaggerOperation(
