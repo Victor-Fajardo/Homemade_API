@@ -22,7 +22,7 @@ namespace Homemade.Domain.Models
         [Required]
         public string Email { get; set; }
 
-        public Byte[] Picture { get; set; }
+        public string Picture { get; set; }
 
         [Required]
         public DateTime Date { get; set; }

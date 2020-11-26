@@ -11,6 +11,7 @@ namespace Homemade.Domain.Models
         public  string NameRecipe { get; set; }
         public string Instructions { get; set; }
         public int Qualification { get; set; }
+        public string Img { get; set; } 
         public DateTime Date { get; set; }
         public int AuthorId { get; set; }
         public UserChef Author { get; set; }

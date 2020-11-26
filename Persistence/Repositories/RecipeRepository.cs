@@ -30,6 +30,11 @@ namespace Homemade.Persistence.Repositories
             return await _context.Recipes.ToListAsync();
         }
 
+        public async Task<IEnumerable<Recipe>> ListByIdUser(int id)
+        {
+            return await _context.Recipes.Where(p => p.AuthorId == id).ToListAsync();
+        }
+
         public async  Task<IEnumerable<Recipe>> ListByName(string name)
         {
             return await _context.Recipes.Where(p => p.NameRecipe == name).ToListAsync();

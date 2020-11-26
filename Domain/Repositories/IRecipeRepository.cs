@@ -10,6 +10,7 @@ namespace Homemade.Domain.Repositories
     {
         Task<IEnumerable<Recipe>> ListAsync();
         Task<IEnumerable<Recipe>> ListByName(string name);
+        Task<IEnumerable<Recipe>> ListByIdUser(int id);
         Task AddAsync(Recipe recipe);
         Task<Recipe> FindById(int id);
         void Update(Recipe recipe);
