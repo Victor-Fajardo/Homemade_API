@@ -35,6 +35,11 @@ namespace Homemade.Persistence.Repositories
             return await _context.Menus.ToListAsync();
         }
 
+        public async Task<IEnumerable<Menu>> ListByUserId(int userId)
+        {
+            return await _context.Menus.Where(p => p.UserCommonId == userId).ToListAsync();
+        }
+
         public void Remove(Menu menu)
         {
             _context.Menus.Remove(menu);

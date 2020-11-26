@@ -62,6 +62,11 @@ namespace Homemade.Service
             return menus;
         }
 
+        public async Task<IEnumerable<Menu>> ListByUserId(int userId)
+        {
+            return await _menuRepository.ListByUserId(userId);
+        }
+
         public async Task<MenuResponse> SaveAsync(Menu menu, int userId)
         {
             var existingUser = await _userCommonRepository.FindById(userId);

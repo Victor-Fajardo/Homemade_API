@@ -46,11 +46,21 @@ namespace Homemade.Controllers
             return resource;
         }
 
-        // GET api/<MenuController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [SwaggerOperation(
+             Summary = "List menus by user id",
+             Description = "List of menus by user id",
+             OperationId = "ListAllMenusUserId",
+             Tags = new[] { "Menus" }
+             )]
+        [SwaggerResponse(200, "List of Menus by User Id", typeof(IEnumerable<MenuResource>))]
+        [ProducesResponseType(typeof(IEnumerable<MenuResource>), 200)]
+        [HttpGet("{userId}")]
+        public async Task<IEnumerable<MenuResource>> GetByUserId(int userId)
         {
-            return "value";
+            var menus = await _menuService.ListByUserId(userId);
+            var resource = _mapper
+                .Map<IEnumerable<Menu>, IEnumerable<MenuResource>>(menus);
+            return resource;
         }
 
         // POST api/<MenuController>

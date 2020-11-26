@@ -15,5 +15,6 @@ namespace Homemade.Domain.Services
         Task<MenuResponse> UpdateAsync(int id, Menu menu);
         Task<MenuResponse> DeleteAsync(int id);
         Task<IEnumerable<Menu>> ListByRecipeId(int recipeId);
+        Task<IEnumerable<Menu>> ListByUserId(int userId);
     }
 }

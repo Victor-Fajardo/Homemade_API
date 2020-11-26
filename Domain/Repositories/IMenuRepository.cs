@@ -9,6 +9,7 @@ namespace Homemade.Domain.Repositories
     public interface IMenuRepository
     {
         Task<IEnumerable<Menu>> ListAsync();
+        Task<IEnumerable<Menu>> ListByUserId(int userId);
         Task<Menu> FindByUserId(int userId);
         Task<Menu> FindById(int id);
         Task AddAsync(Menu menu);
