@@ -11,6 +11,5 @@ namespace Homemade.Resource
         [Required]
         [MaxLength(200)]
         public string Instructions { get; set; }
-        public Byte[] Picture { get; set; }
     }
 }

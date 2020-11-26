@@ -165,7 +165,8 @@ namespace Homemade.Domain.Persistence.Contexts
 
             //MenuRecipe Entity
             builder.Entity<MenuRecipe>().ToTable("MenuRecipes");
-            builder.Entity<MenuRecipe>().HasKey(pt => new { pt.MenuId, pt.RecipeId });
+            builder.Entity<MenuRecipe>().HasKey(pt => pt.Id);
+            builder.Entity<MenuRecipe>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<MenuRecipe>().HasOne(pt => pt.Menu).WithMany(pt => pt.MenuRecipes).HasForeignKey(pt => pt.MenuId);
             builder.Entity<MenuRecipe>().HasOne(pt => pt.Recipe).WithMany(pt => pt.MenuRecipes).HasForeignKey(pt => pt.RecipeId);
         }
