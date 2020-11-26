@@ -12,6 +12,7 @@ namespace Homemade.Domain.Services.Communications
         public string Name { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
+        public string Picture { get; set;}
         public string Token { get; set; }
         public DateTime Date { get; set; }
         public bool Gender { get; set; }
@@ -22,6 +23,7 @@ namespace Homemade.Domain.Services.Communications
             Name = user.Name;
             Lastname = user.Lastname;
             Email = user.Email;
+            Picture = user.Picture;
             Token = token;
             Date = user.Date;
             Gender = user.Gender;
