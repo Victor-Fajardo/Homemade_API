@@ -31,18 +31,18 @@ namespace Homemade.Controllers
         }
 
         [SwaggerOperation(
-            Summary = "List all Menu by Recipe Id",
-            Description = "List of Menu for a Recipe Id",
-            OperationId = "ListAllMenuByRecipeId",
+            Summary = "List all Recipes by Menu Id",
+            Description = "List of Recipes for a Menu Id",
+            OperationId = "ListAllRecipeByMenuId",
             Tags = new[] { "Menus" }
         )]
-        [SwaggerResponse(200, "List of Menu for a Recipe Id", typeof(IEnumerable<MenuResource>))]
-        [HttpGet]
-        public async Task<IEnumerable<RecipeResource>> GetAllByRecipeIdAsync(int recipeId)
+        [SwaggerResponse(200, "List of Recipes for a Menu Id", typeof(IEnumerable<MenuResource>))]
+        [HttpGet("{menuId}")]
+        public async Task<IEnumerable<RecipeResource>> GetAllByMenuIdAsync(int menuId)
         {
-            var menus = await _menuService.ListByRecipeId(recipeId);
+            var recipes = await _recipeService.ListByMenuId(menuId);
             var resource = _mapper
-                .Map<IEnumerable<Menu>, IEnumerable<RecipeResource>>(menus);
+                .Map<IEnumerable<Recipe>, IEnumerable<RecipeResource>>(recipes);
             return resource;
         }
 
